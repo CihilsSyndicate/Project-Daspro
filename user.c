@@ -92,7 +92,6 @@ void findMember(){
     }
 }
 
-<<<<<<< HEAD
 void menuMember(){
     printf("\nMenu Member:\n");
     printf("--------------------------------\n");
@@ -101,10 +100,4 @@ void menuMember(){
     printf("[3] : Cari Member\n");
     printf("[0] : Keluar\n");
     printf("--------------------------------\n");
-=======
-void seedUser(){
-    for(int i = 0; i < 3; i++){
-
-    }
->>>>>>> dba329b89686447d11b908a1341daa4a4a953b1e
 }
