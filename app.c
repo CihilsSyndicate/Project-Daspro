@@ -2,7 +2,14 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "book.c"
-#include "user.c"
+#include "user.h"
+
+
+void header(){
+    printf("=======================================\n");
+    printf("||        PERPUSTAKAAN HITAM         ||\n");
+    printf("=======================================\n\n");
+}
 
 void clear(){
     #ifdef _WIN32
@@ -10,12 +17,6 @@ void clear(){
     #else
         system("clear");
     #endif
-}
-
-void header(){
-    printf("=======================================\n");
-    printf("||        PERPUSTAKAAN HITAM         ||\n");
-    printf("=======================================\n\n");
 }
 
 void menuUtama(){
@@ -42,8 +43,6 @@ int main(){
         char email[50], password[50];
         header();
 
-        // printf("%s",admin[0].dataAdmin.namaLengkap);
-        
         printf("Masukkan Email anda : ");
         fgets(email, sizeof(email), stdin);
         email[strlen(email) - 1] = '\0';
@@ -128,9 +127,31 @@ int main(){
                         } while (subMenu != 0);
                         
                         break;
+                    case 3:
+                        do{
+                            clear();
+                            header();
+                            menuBuku();
+                            printf("\nPilih sub-menu: ");
+                            scanf("%d", &subMenu);
+                            getchar();
+
+                            switch (subMenu)
+                            {
+                            case 1:
+                                clear();
+                                header();
+                                isExit = changePassword();
+                                break;
+                            
+                            default:
+                                break;
+                            }
+
+                        }while(subMenu != 0);
                     default:
                         printf("See ya!\n");
-                        isExit = true;
+                        // isExit = true;
                         return 0;
                         break;
                     

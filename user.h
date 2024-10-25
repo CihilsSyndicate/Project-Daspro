@@ -1,3 +1,8 @@
+#ifndef USER_H
+#define USER_H
+
+
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -121,3 +126,32 @@ void seedMember(){
 
     totalMember++;
 }
+
+bool changePassword(){
+    // clear();
+    // header();
+
+    char passwordTemp[50], newPassword[50];
+    bool isPasswordMatch = false;
+    do{
+
+        printf("\n Silakan Masukkan password baru : ");
+        fgets(passwordTemp, sizeof(passwordTemp), stdin);
+        passwordTemp[strlen(passwordTemp) - 1] = '\0';
+
+        printf("\n Silakan konfirmasi password baru : ");
+        fgets(newPassword, sizeof(newPassword), stdin);
+        newPassword[strlen(newPassword) - 1] = '\0';
+    
+        if(strcmp(passwordTemp, newPassword) == 0){
+            strcpy(admin[0].password, newPassword);
+            printf("Password berhasil diubah, Silakan Login Kembali ! \n");
+            isPasswordMatch = true;
+        }
+
+    }while(!isPasswordMatch);
+
+    return true;
+}
+
+#endif
