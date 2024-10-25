@@ -13,13 +13,6 @@ struct User{
     struct Alamat alamatUser;
 };
 
-struct Admin{
-    char email[30];
-    char password[50];
-    struct User dataAdmin;
-};
-
-
 struct Member{
     struct User dataMember;
 };
@@ -67,6 +60,7 @@ void getDataMember(){
     if(totalMember > 0){
         for(int i = 0; i < totalMember; i++){
             printf("[%d]. %s, %s \n",i+1, member[i].dataMember.namaLengkap, member[i].dataMember.alamatUser.kota,  member[i].dataMember.alamatUser.provinsi);
+            // printf("[%d]. %s \n",i+1, member[i].dataMember.alamatUser.kota);
         }
     }else{
         printf("Data member kosong ! \n");
@@ -89,11 +83,5 @@ void findMember(){
         }else{
             printf("Member out of range, Please check it again ! \n");
         }
-    }
-}
-
-void seedUser(){
-    for(int i = 0; i < 3; i++){
-
     }
 }
