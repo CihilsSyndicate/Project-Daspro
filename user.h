@@ -127,9 +127,18 @@ void seedMember(){
     totalMember++;
 }
 
+void menuUser(){
+    printf("\nMenu User:\n");
+    printf("--------------------------------\n");
+    printf("[1] : Ganti Password\n");
+    // printf("[2] : Tampilkan Semua Buku\n");
+    // printf("[0] : Keluar\n");
+    printf("--------------------------------\n");
+}
+
+
+
 bool changePassword(){
-    // clear();
-    // header();
 
     char passwordTemp[50], newPassword[50];
     bool isPasswordMatch = false;
@@ -145,7 +154,6 @@ bool changePassword(){
     
         if(strcmp(passwordTemp, newPassword) == 0){
             strcpy(admin[0].password, newPassword);
-            printf("Password berhasil diubah, Silakan Login Kembali ! \n");
             isPasswordMatch = true;
         }
 

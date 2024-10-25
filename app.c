@@ -5,166 +5,176 @@
 #include "user.h"
 
 
-void header(){
-    printf("=======================================\n");
-    printf("||        PERPUSTAKAAN HITAM         ||\n");
-    printf("=======================================\n\n");
+void header() {
+	printf("=======================================\n");
+	printf("||        PERPUSTAKAAN HITAM         ||\n");
+	printf("=======================================\n\n");
 }
 
-void clear(){
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
+void clear() {
+#ifdef _WIN32
+	system("cls");
+#else
+	system("clear");
+#endif
 }
 
-void menuUtama(){
-    printf("\nMenu Utama:\n");
-    printf("--------------------------------\n");
-    printf("[1] : Manajemen Member\n");
-    printf("[2] : Manajemen Buku\n");
-    printf("[0] : Keluar\n");
-    printf("--------------------------------\n");
+void menuUtama() {
+	printf("\nMenu Utama:\n");
+	printf("--------------------------------\n");
+	printf("[1] : Manajemen Member\n");
+	printf("[2] : Manajemen Buku\n");
+	printf("[3] : Manajemen Akun\n");
+	printf("[0] : Keluar\n");
+	printf("--------------------------------\n");
 }
 
-int main(){
-    
-    int menu;
-    int subMenu;
-    int isExitNum = 0;
-    bool isExit = false;
-    int loginAttempt = 0;
+int login();
 
-    bukuSementara();
-    seedUser();
-    do{
-        // clear();
-        char email[50], password[50];
-        header();
+int main() {
 
-        printf("Masukkan Email anda : ");
-        fgets(email, sizeof(email), stdin);
-        email[strlen(email) - 1] = '\0';
-        
-        printf("Masukkan Password anda : ");
-        fgets(password, sizeof(password), stdin);
-        password[strlen(password) - 1] = '\0';
+	bukuSementara();
+	seedUser();
+	login();
+}
 
-        if(strcmp(email, admin[0].email) == 0 && strcmp(password, admin[0].password) == 0){
-            do{
-                clear();
-                header();
-                menuUtama();
-            
-                printf("\nPilih menu: ");
-                scanf("%d", &menu);
-                getchar();
+int login() {
+	int menu;
+	int subMenu;
+	int isExitNum = 0;
+	bool isExit = false;
+	int loginAttempt = 0;
+	do {
+		// clear();
+		char email[50], password[50];
+		header();
 
-                switch(menu){
-                    case 1:
-                        do
-                        {   
-                            clear();
-                            header();
-                            menuMember();
-                            printf("\nPilih sub-menu: ");
-                            scanf("%d", &subMenu);
-                            getchar();
-                            
-                            switch (subMenu)
-                            {
-                            case 1:
-                                addMember();
-                                break;
-                            case 2:
-                                getDataMember();
-                                break;
-                            case 3:
-                                findMember();
-                                break;
-                            
-                            default:
-                                break;
+		printf("Masukkan Email anda : ");
+		fgets(email, sizeof(email), stdin);
+		email[strlen(email) - 1] = '\0';
+
+		printf("Masukkan Password anda : ");
+		fgets(password, sizeof(password), stdin);
+		password[strlen(password) - 1] = '\0';
+
+		if(strcmp(email, admin[0].email) == 0 && strcmp(password, admin[0].password) == 0) {
+			do {
+				clear();
+				header();
+				menuUtama();
+
+				printf("\nPilih menu: ");
+				scanf("%d", &menu);
+				getchar();
+
+				switch(menu) {
+				case 1:
+					do
+					{
+						clear();
+						header();
+						menuMember();
+						printf("\nPilih sub-menu: ");
+						scanf("%d", &subMenu);
+						getchar();
+
+						switch (subMenu)
+						{
+						case 1:
+							addMember();
+							break;
+						case 2:
+							getDataMember();
+							break;
+						case 3:
+							findMember();
+							break;
+
+						default:
+							break;
+						}
+
+						if(subMenu != 0) {
+							printf("\nTekan Enter untuk melanjutkan..");
+							getchar();
+						}
+
+					} while (subMenu != 0);
+
+					break;
+				case 2:
+					do
+					{
+						clear();
+						header();
+						menuBuku();
+						printf("\nPilih sub-menu: ");
+						scanf("%d", &subMenu);
+						getchar();
+
+						switch (subMenu)
+						{
+						case 1:
+							tambahBuku();
+							break;
+						case 2:
+							tampilkanBuku();
+							break;
+
+						default:
+							break;
+						}
+
+						if(subMenu != 0) {
+							printf("\nTekan Enter untuk melanjutkan..");
+							getchar();
+						}
+
+					} while (subMenu != 0);
+
+					break;
+				case 3:
+					do {
+						clear();
+						header();
+						menuUser();
+						printf("\nPilih sub-menu: ");
+						scanf("%d", &subMenu);
+						getchar();
+
+						switch (subMenu)
+						{
+						case 1:
+							clear();
+							header();
+							bool isRelog = changePassword();
+                            if(isRelog){
+								clear();
+								printf("Password berhasil diubah, Silakan Login Kembali ! \n");
+                                login();
                             }
+							break;
 
-                            if(subMenu != 0){
-                                printf("\nTekan Enter untuk melanjutkan..");
-                                getchar();
-                            }
+						default:
+							break;
+						}
 
-                        } while (subMenu != 0);
-                        
-                        break;
-                    case 2:
-                        do
-                        {
-                            clear();
-                            header();
-                            menuBuku();
-                            printf("\nPilih sub-menu: ");
-                            scanf("%d", &subMenu);
-                            getchar();
+					} while(subMenu != 0);
+				default:
+					printf("See ya!\n");
+					break;
 
-                            switch (subMenu)
-                            {
-                            case 1:
-                                tambahBuku();
-                                break;
-                            case 2:
-                                tampilkanBuku();
-                                break;
-                            
-                            default:
-                                break;
-                            }
-
-                            if(subMenu != 0){
-                                printf("\nTekan Enter untuk melanjutkan..");
-                                getchar();
-                            }
-
-                        } while (subMenu != 0);
-                        
-                        break;
-                    case 3:
-                        do{
-                            clear();
-                            header();
-                            menuBuku();
-                            printf("\nPilih sub-menu: ");
-                            scanf("%d", &subMenu);
-                            getchar();
-
-                            switch (subMenu)
-                            {
-                            case 1:
-                                clear();
-                                header();
-                                isExit = changePassword();
-                                break;
-                            
-                            default:
-                                break;
-                            }
-
-                        }while(subMenu != 0);
-                    default:
-                        printf("See ya!\n");
-                        // isExit = true;
-                        return 0;
-                        break;
-                    
-                };
-            }while(!isExit);
-        }else{
-            clear();
-            printf("Data yang anda masukkan salah, coba lagi \n");
-            loginAttempt++;
-        }
+				};
+			} while(!isExit);
+		} else {
+			clear();
+			printf("Data yang anda masukkan salah, coba lagi \n");
+			loginAttempt++;
+		}
 
 
-    }while(loginAttempt < 3);
-    printf("Akun anda telah diblokir \n");
-    return 0;
+	} while(loginAttempt < 3);
+	printf("Akun anda telah diblokir \n");
+	return 0;
+
 }
