@@ -166,21 +166,26 @@ int login() {
 						} while(!isRelog);
 
 					} while(subMenu != 0);
-				default:
-					printf("See ya!\n");
 					break;
-
-				};
+				case 0:  
+					printf("See ya!\n");
+					isExit = true; 
+					break;
+				default:
+					printf("Pilihan tidak valid. Silakan coba lagi.\n");
+					break;
+				}
 			} while(!isExit);
+			break;  
 		} else {
 			clear();
 			printf("Data yang anda masukkan salah, coba lagi \n");
 			loginAttempt++;
 		}
-
-
 	} while(loginAttempt < 3);
-	printf("Akun anda telah diblokir \n");
-	return 0;
 
+	if (loginAttempt >= 3) {
+		printf("Akun anda telah diblokir \n");
+	}
+	return 0;
 }
