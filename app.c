@@ -45,7 +45,6 @@ int login() {
 	bool isExit = false;
 	int loginAttempt = 0;
 	do {
-		// clear();
 		char email[50], password[50];
 		header();
 
@@ -141,23 +140,30 @@ int login() {
 						printf("\nPilih sub-menu: ");
 						scanf("%d", &subMenu);
 						getchar();
+						bool isRelog = false;
 
-						switch (subMenu)
-						{
-						case 1:
-							clear();
-							header();
-							bool isRelog = changePassword();
-                            if(isRelog){
+						do {
+							switch (subMenu)
+							{
+							case 1:
+								clear();
+								header();
+								isRelog = changePassword();
+								break;
+							case 2:
+								clear();
+								header();
+								isRelog = changeEmail();
+								break;
+							default:
+								break;
+							}
+							if(isRelog) {
 								clear();
 								printf("Password berhasil diubah, Silakan Login Kembali ! \n");
-                                login();
-                            }
-							break;
-
-						default:
-							break;
-						}
+								login();
+							}
+						} while(!isRelog);
 
 					} while(subMenu != 0);
 				default:

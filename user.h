@@ -137,26 +137,64 @@ void menuUser(){
 }
 
 
+bool verifyPasswordUser(char passwordTemp[], char newPassword[]){
+
+    if(strcmp(passwordTemp, newPassword) == 0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+bool changeEmail(){
+    char newEmail[50], passwordVerify[50];
+    bool isPasswordMatch = false;
+
+    printf("\n Silakan Masukkan password baru : ");
+    fgets(newEmail, sizeof(newEmail), stdin);
+    newEmail[strlen(newEmail) - 1] = '\0';
+
+    do{
+        printf("\n Silakan Masukkan password : ");
+        fgets(passwordVerify, sizeof(passwordVerify), stdin);
+        passwordVerify[strlen(passwordVerify) - 1] = '\0';
+    
+        if(verifyPasswordUser(passwordVerify, admin[0].password)){
+            strcpy(admin[0].email, newEmail);
+            isPasswordMatch = true;
+        }else{
+            printf("\n Password Salah ! ");
+            isPasswordMatch = false;
+        }
+
+    }while(!isPasswordMatch);
+
+    return true;
+}
 
 bool changePassword(){
 
     char passwordTemp[50], newPassword[50];
     bool isPasswordMatch = false;
+
+    printf("\n Silakan Masukkan password baru : ");
+    fgets(passwordTemp, sizeof(passwordTemp), stdin);
+    passwordTemp[strlen(passwordTemp) - 1] = '\0';
+
     do{
-
-        printf("\n Silakan Masukkan password baru : ");
-        fgets(passwordTemp, sizeof(passwordTemp), stdin);
-        passwordTemp[strlen(passwordTemp) - 1] = '\0';
-
         printf("\n Silakan konfirmasi password baru : ");
         fgets(newPassword, sizeof(newPassword), stdin);
         newPassword[strlen(newPassword) - 1] = '\0';
-    
-        if(strcmp(passwordTemp, newPassword) == 0){
+
+        if(verifyPasswordUser(passwordTemp, newPassword)){
             strcpy(admin[0].password, newPassword);
             isPasswordMatch = true;
+        }else{
+            printf("\n Password Salah ! ");
+            isPasswordMatch = false;
         }
-
+    
     }while(!isPasswordMatch);
 
     return true;
