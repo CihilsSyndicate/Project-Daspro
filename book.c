@@ -62,7 +62,25 @@ void tambahBuku(){
 
         printf("Apakah anda ingin menambahkan buku lagi?(y/t): ");
         scanf("%c", &isFinish);
+        getchar();
     }while (isFinish == 't');
-    
 
+}
+
+void menuBuku(){
+    printf("\nMenu Buku:\n");
+    printf("--------------------------------\n");
+    printf("[1] : Tambah Buku\n");
+    printf("[2] : Tampilkan Semua Buku\n");
+    printf("[0] : Keluar\n");
+    printf("--------------------------------\n");
+}
+
+void tampilkanBuku(){
+    printf("\n========== Buku ==========\n");
+    for (int i = 0; i < totalBuku; i++)
+    {
+        printf("\033[1m[%d]. %s\033[0m\n", i + 1, buku[i].judulBuku);
+    }
+    
 }
