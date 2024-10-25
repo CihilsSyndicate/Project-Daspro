@@ -25,6 +25,7 @@ struct Member{
 };
 
 struct Member member[100];
+struct Admin admin[1];
 int totalMember = 0;
 
 void addMember(){
@@ -100,4 +101,13 @@ void menuMember(){
     printf("[3] : Cari Member\n");
     printf("[0] : Keluar\n");
     printf("--------------------------------\n");
+}
+
+void seedUser(){
+    strcpy(admin[0].email,"admin@example.org");
+    strcpy(admin[0].password, "passwordsecure");
+    strcpy(admin[0].dataAdmin.namaLengkap,"Admin Perpus");
+    strcpy(admin[0].dataAdmin.alamatUser.namaJalan,"Gunung Roay");
+    strcpy(admin[0].dataAdmin.alamatUser.kota,"Tasikmalaya");
+    strcpy(admin[0].dataAdmin.alamatUser.provinsi,"Jawa Barat");
 }
