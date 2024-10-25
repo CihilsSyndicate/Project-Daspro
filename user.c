@@ -22,6 +22,8 @@ struct Admin{
 
 struct Member{
     struct User dataMember;
+    int totalPinjaman;
+    int bukuPinjaman[10];
 };
 
 struct Member member[100];
@@ -30,7 +32,6 @@ int totalMember = 0;
 
 void addMember(){
     bool isFinishAddUser = false;
-    int countUser = 1;
     int intForBool = 1;
     do{
         printf("Masukkan data Member \n");
@@ -110,4 +111,13 @@ void seedUser(){
     strcpy(admin[0].dataAdmin.alamatUser.namaJalan,"Gunung Roay");
     strcpy(admin[0].dataAdmin.alamatUser.kota,"Tasikmalaya");
     strcpy(admin[0].dataAdmin.alamatUser.provinsi,"Jawa Barat");
+}
+
+void seedMember(){
+    strcpy(member[0].dataMember.namaLengkap,"Ricko");
+    strcpy(member[0].dataMember.alamatUser.namaJalan,"Jl.Jalan");
+    strcpy(member[0].dataMember.alamatUser.kota,"Tasikmalaya");
+    strcpy(member[0].dataMember.alamatUser.provinsi,"Jawa Barat");
+
+    totalMember++;
 }
