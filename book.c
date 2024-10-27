@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "user.h"
 
 struct Book
 {
@@ -72,15 +73,56 @@ void menuBuku(){
     printf("--------------------------------\n");
     printf("[1] : Tambah Buku\n");
     printf("[2] : Tampilkan Semua Buku\n");
+    printf("[3] : Pinjamkan Buku\n");
     printf("[0] : Keluar\n");
     printf("--------------------------------\n");
 }
 
-void tampilkanBuku(){
+int tampilkanBuku(){
     printf("\n========== Buku ==========\n");
-    for (int i = 0; i < totalBuku; i++)
-    {
-        printf("\033[1m[%d]. %s\033[0m\n", i + 1, buku[i].judulBuku);
+    if(totalBuku > 0){
+        for (int i = 0; i < totalBuku; i++)
+        {
+            printf("\033[1m[%d]. %s\033[0m\n", i + 1, buku[i].judulBuku);
+        }
+    }else{
+        printf("Data buku kosong, silakan diisi terlebih dahulu \n");
+        return 0;
+    }
+    
+}
+
+int findBook(){
+    int bookIndex;
+    tampilkanBuku();
+
+    if(totalBuku > 0){
+        printf("Pilih buku berdasarkan Nomor : ");
+        scanf("%d", &bookIndex);
+
+        bookIndex -= 1;
+
+        printf("Data Buku \n");
+        printf("No Urut Buku : %d \n", bookIndex+=1);
+        printf("Judul Buku : %s \n", buku[bookIndex].judulBuku);
+        printf("Genre Buku : %s \n", buku[bookIndex].genre);
+        printf("Pengarang Buku : %s \n", buku[bookIndex].pengarang);
+        printf("Penerbit Buku : %s \n", buku[bookIndex].penerbit);
+        printf("Jumlah Buku : %s \n", buku[bookIndex].jumlah);
+
+        return bookIndex;
+
+    }
+
+
+}
+
+void pinjamkanBuku(){
+    int memberIndex = findMember();
+    int bookIndex;
+    if(memberIndex > 1){
+        memberIndex -= 1;
+        bookIndex = findBook();
     }
     
 }

@@ -70,17 +70,18 @@ void addMember(){
     }while(!isFinishAddUser);
 }
 
-void getDataMember(){
+int getDataMember(){
     if(totalMember > 0){
         for(int i = 0; i < totalMember; i++){
             printf("[%d]. %s, %s \n",i+1, member[i].dataMember.namaLengkap, member[i].dataMember.alamatUser.kota,  member[i].dataMember.alamatUser.provinsi);
         }
     }else{
         printf("Data member kosong ! \n");
+        return 0;
     }
 }
 
-void findMember(){
+int findMember(){
     int arrMemberIndex;
     getDataMember();
 
@@ -93,10 +94,15 @@ void findMember(){
             printf("Member yang anda cari Nomor : %d \n", arrMemberIndex);
             printf("Nama Member : %s \n", member[arrMemberIndex - 1].dataMember.namaLengkap);
             printf("Alamat Member : %s, %s, %s \n", member[arrMemberIndex - 1].dataMember.alamatUser.namaJalan, member[arrMemberIndex - 1].dataMember.alamatUser.kota,  member[arrMemberIndex - 1].dataMember.alamatUser.provinsi);
+            return arrMemberIndex+=1;
         }else{
             printf("Member out of range, Please check it again ! \n");
         }
+    }else{
+        return 0;
     }
+
+
 }
 
 void menuMember(){
@@ -124,7 +130,7 @@ void seedMember(){
     strcpy(member[0].dataMember.alamatUser.kota,"Tasikmalaya");
     strcpy(member[0].dataMember.alamatUser.provinsi,"Jawa Barat");
 
-    totalMember++;
+    totalMember = 1;
 }
 
 void menuUser(){

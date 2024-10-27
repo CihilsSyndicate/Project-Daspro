@@ -35,6 +35,7 @@ int main() {
 
 	bukuSementara();
 	seedUser();
+	seedMember();
 	login();
 }
 
@@ -44,19 +45,19 @@ int login() {
 	int isExitNum = 0;
 	bool isExit = false;
 	int loginAttempt = 0;
-	do {
+	// do {
 		char email[50], password[50];
 		header();
 
-		printf("Masukkan Email anda : ");
-		fgets(email, sizeof(email), stdin);
-		email[strlen(email) - 1] = '\0';
+		// printf("Masukkan Email anda : ");
+		// fgets(email, sizeof(email), stdin);
+		// email[strlen(email) - 1] = '\0';
 
-		printf("Masukkan Password anda : ");
-		fgets(password, sizeof(password), stdin);
-		password[strlen(password) - 1] = '\0';
+		// printf("Masukkan Password anda : ");
+		// fgets(password, sizeof(password), stdin);
+		// password[strlen(password) - 1] = '\0';
 
-		if(strcmp(email, admin[0].email) == 0 && strcmp(password, admin[0].password) == 0) {
+		// if(strcmp(email, admin[0].email) == 0 && strcmp(password, admin[0].password) == 0) {
 			do {
 				clear();
 				header();
@@ -119,6 +120,9 @@ int login() {
 						case 2:
 							tampilkanBuku();
 							break;
+						case 3:
+							pinjamkanBuku();
+							break;
 
 						default:
 							break;
@@ -164,25 +168,25 @@ int login() {
 								login();
 							}
 						} while(!isRelog);
-
+						break;
 					} while(subMenu != 0);
-					break;
-				case 0:  
+
+				case 0:
 					printf("See ya!\n");
-					isExit = true; 
+					isExit = true;
 					break;
 				default:
 					printf("Pilihan tidak valid. Silakan coba lagi.\n");
 					break;
 				}
 			} while(!isExit);
-			break;  
-		} else {
-			clear();
-			printf("Data yang anda masukkan salah, coba lagi \n");
-			loginAttempt++;
-		}
-	} while(loginAttempt < 3);
+			// break;
+		// } else {
+			// clear();
+			// printf("Data yang anda masukkan salah, coba lagi \n");
+			// loginAttempt++;
+		// }
+	// } while(loginAttempt < 3);
 
 	if (loginAttempt >= 3) {
 		printf("Akun anda telah diblokir \n");
