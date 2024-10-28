@@ -31,6 +31,7 @@ struct Member{
     int bukuPinjaman[10];
 };
 
+
 struct Member member[100];
 struct Admin admin[1];
 int totalMember = 0;

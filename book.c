@@ -11,7 +11,17 @@ struct Book
     int jumlah;
 };
 
+
+struct PinjamBuku{
+    int memberIndex;
+    int bukuIndex[10];
+};
+
 struct Book buku[100];
+struct PinjamBuku dataPinjam[100];
+
+
+int peminjam = 0;
 int totalBuku = 0;
 
 
@@ -101,29 +111,52 @@ int findBook(){
         printf("Pilih buku berdasarkan Nomor : ");
         scanf("%d", &bookIndex);
 
+        printf("Data Buku \n");
+        printf("No Urut Buku : %d \n", bookIndex);
+
         bookIndex -= 1;
 
-        printf("Data Buku \n");
-        printf("No Urut Buku : %d \n", bookIndex+=1);
         printf("Judul Buku : %s \n", buku[bookIndex].judulBuku);
         printf("Genre Buku : %s \n", buku[bookIndex].genre);
         printf("Pengarang Buku : %s \n", buku[bookIndex].pengarang);
         printf("Penerbit Buku : %s \n", buku[bookIndex].penerbit);
-        printf("Jumlah Buku : %s \n", buku[bookIndex].jumlah);
+        printf("Jumlah Buku : %d \n", buku[bookIndex].jumlah);
 
-        return bookIndex;
+        return bookIndex += 1;
 
     }
-
 
 }
 
 void pinjamkanBuku(){
     int memberIndex = findMember();
     int bookIndex;
-    if(memberIndex > 1){
+    if(memberIndex > 0){
+        int bookNumber = 0;
+        char finishPinjamChar;
+        bool isFinishPinjam = false;
         memberIndex -= 1;
-        bookIndex = findBook();
+        dataPinjam[peminjam].memberIndex = memberIndex;
+
+        do{
+            bookIndex = findBook();
+            dataPinjam[peminjam].bukuIndex[bookNumber] = bookIndex-1;
+            
+            bookNumber++;
+            printf("Buku berhasil ditambahkan ke daftar pinjam \n");
+
+            printf("Tambahkan buku lain ? (y/t)");
+            scanf("%c", &finishPinjamChar);
+            getchar();
+
+            if(finishPinjamChar != 'y'){
+                isFinishPinjam = true;
+            }
+
+
+        }while(!isFinishPinjam);
+        peminjam++;
+
     }
-    
 }
+
