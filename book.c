@@ -57,14 +57,15 @@ void tambahBuku(){
         buku[totalBuku].pengarang[strlen(buku[totalBuku].pengarang) - 1] = '\0';
 
         printf("Masukan Jumlah Buku: ");
-        scanf("%d", &buku[totalBuku].judulBuku);
+        scanf("%d", &buku[totalBuku].jumlah);
+        getchar();
 
         totalBuku++;
 
         printf("Apakah anda ingin menambahkan buku lagi?(y/t): ");
         scanf("%c", &isFinish);
         getchar();
-    }while (isFinish == 't');
+    }while (isFinish == 'y');
 
 }
 
@@ -83,7 +84,7 @@ int tampilkanBuku(){
     if(totalBuku > 0){
         for (int i = 0; i < totalBuku; i++)
         {
-            printf("\033[1m[%d]. %s\033[0m\n", i + 1, buku[i].judulBuku);
+            printf("%d. %s\n", i + 1, buku[i].judulBuku);
         }
     }else{
         printf("Data buku kosong, silakan diisi terlebih dahulu \n");
