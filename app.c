@@ -123,6 +123,9 @@ int login() {
 						case 3:
 							pinjamkanBuku();
 							break;
+						case 4:
+							daftarPeminjamAktif();
+							break;
 
 						default:
 							break;

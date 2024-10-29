@@ -1,8 +1,6 @@
 #ifndef USER_H
 #define USER_H
 
-
-
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -27,8 +25,6 @@ struct Admin{
 
 struct Member{
     struct User dataMember;
-    int totalPinjaman;
-    int bukuPinjaman[10];
 };
 
 

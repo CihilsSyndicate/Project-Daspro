@@ -15,6 +15,7 @@ struct Book
 struct PinjamBuku{
     int memberIndex;
     int bukuIndex[10];
+    int totalPinjaman;
 };
 
 struct Book buku[100];
@@ -85,22 +86,37 @@ void menuBuku(){
     printf("[1] : Tambah Buku\n");
     printf("[2] : Tampilkan Semua Buku\n");
     printf("[3] : Pinjamkan Buku\n");
+    printf("[4] : Daftar Peminjam\n");
     printf("[0] : Keluar\n");
     printf("--------------------------------\n");
 }
 
-int tampilkanBuku(){
-    printf("\n========== Buku ==========\n");
-    if(totalBuku > 0){
-        for (int i = 0; i < totalBuku; i++)
-        {
-            printf("%d. %s\n", i + 1, buku[i].judulBuku);
+int tampilkanBuku() {
+    printf("\n===============================================\n");
+    printf("||              DAFTAR BUKU                  ||\n");
+    printf("===============================================\n");
+    
+    if (totalBuku > 0) {
+        for (int i = 0; i < totalBuku; i++) {
+            printf("\nBuku ke-%d:\n", i + 1);
+            printf("----------------------------------------\n");
+            printf("Judul Buku    : %s\n", buku[i].judulBuku);
+            printf("Pengarang     : %s\n", buku[i].pengarang);
+            printf("Penerbit      : %s\n", buku[i].penerbit);
+            printf("Genre         : %s\n", buku[i].genre);
+            printf("Stok          : %d\n", buku[i].jumlah);
+            printf("----------------------------------------\n");
         }
-    }else{
-        printf("Data buku kosong, silakan diisi terlebih dahulu \n");
+        printf("\nTotal Buku: %d\n", totalBuku);
+        printf("===============================================\n");
+        return 1;
+    } else {
+        printf("||          Data buku masih kosong          ||\n");
+        printf("||      Silakan tambahkan buku terlebih     ||\n");
+        printf("||               dahulu                     ||\n");
+        printf("===============================================\n");
         return 0;
     }
-    
 }
 
 int findBook(){
@@ -136,27 +152,89 @@ void pinjamkanBuku(){
         char finishPinjamChar;
         bool isFinishPinjam = false;
         memberIndex -= 1;
+        
         dataPinjam[peminjam].memberIndex = memberIndex;
-
+        dataPinjam[peminjam].totalPinjaman = 0;
+        
         do{
             bookIndex = findBook();
-            dataPinjam[peminjam].bukuIndex[bookNumber] = bookIndex-1;
-            
-            bookNumber++;
-            printf("Buku berhasil ditambahkan ke daftar pinjam \n");
+            if(bookIndex > 0) {
+                bookIndex -= 1;  
 
-            printf("Tambahkan buku lain ? (y/t)");
-            scanf("%c", &finishPinjamChar);
+                if(buku[bookIndex].jumlah > 0) {
+                    dataPinjam[peminjam].bukuIndex[bookNumber] = bookIndex;
+                    dataPinjam[peminjam].totalPinjaman++;
+                    buku[bookIndex].jumlah--;
+                    bookNumber++;
+                    
+                    printf("Buku berhasil ditambahkan ke daftar pinjam \n");
+                } else {
+                    printf("Maaf, stok buku tidak tersedia\n");
+                }
+            }
+
+            printf("Tambahkan buku lain ? (y/t): ");
+            scanf(" %c", &finishPinjamChar);
             getchar();
 
             if(finishPinjamChar != 'y'){
                 isFinishPinjam = true;
             }
 
-
-        }while(!isFinishPinjam);
-        peminjam++;
-
+        } while(!isFinishPinjam && bookNumber < 10);
+        
+        if(dataPinjam[peminjam].totalPinjaman > 0) {
+            peminjam++;
+            printf("\nPeminjaman berhasil dicatat!\n");
+        }
     }
 }
 
+void daftarPeminjamAktif() {
+    printf("\n=== DAFTAR PEMINJAMAN  ===\n\n");    
+    
+    if (peminjam > 0) {
+        for(int i = 0; i < peminjam; i++) {
+            printf("Peminjam ke-%d:\n", i + 1);
+            printf("----------------------------------------\n");
+            printf("Nama Peminjam: %s\n", 
+                   member[dataPinjam[i].memberIndex - 1].dataMember.namaLengkap);
+            printf("Alamat: %s, %s, %s\n",
+                   member[dataPinjam[i].memberIndex - 1].dataMember.alamatUser.namaJalan,
+                   member[dataPinjam[i].memberIndex - 1].dataMember.alamatUser.kota,
+                   member[dataPinjam[i].memberIndex - 1].dataMember.alamatUser.provinsi);
+            
+            printf("\nBuku yang dipinjam:\n");
+            for(int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
+                printf("%d. %s (Pengarang: %s)\n", //bae barengkeun, maneh asup ka 
+                       j + 1, 
+                       buku[dataPinjam[i].bukuIndex[j]].judulBuku,
+                       buku[dataPinjam[i].bukuIndex[j]].pengarang);
+            }
+            printf("----------------------------------------\n\n");
+        }
+        printf("Total Peminjam Aktif: %d\n", peminjam);
+    } else {
+        printf("Tidak ada peminjaman saat ini\n");
+    }
+    printf("===============================================\n");
+}
+
+void kembalikanBuku(){
+    if(peminjam > 0){
+        int findIndexMember = findMember();
+        for(int i = 0; i < peminjam; i++){
+            if(findIndexMember-1 == dataPinjam[i].memberIndex){
+                printf("\nPeminjam %d. Nama : %s \n", i+1, member[dataPinjam[i].memberIndex].dataMember.namaLengkap);
+                printf("Data buku dipinjam : \n");
+                for(int j = 0; j < dataPinjam[i].totalPinjaman; j++){
+                    printf("Buku 1 : %s \n", buku[dataPinjam[i].bukuIndex[j]].judulBuku);
+                }
+            }else{
+                printf("Member ini tidak meminjam buku \n");
+            }
+        }
+    }else{
+        printf("Tidak ada data peminjam \n");
+    }
+}
