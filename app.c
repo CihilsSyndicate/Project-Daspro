@@ -1,14 +1,32 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "book.c"
 #include "user.h"
+#include "colors.h"
 
+
+void printCentered(const char* text, int width) {
+    int len = strlen(text);
+    int padding = (width - len) / 2;
+    printf("%*s%s%*s\n", padding, "", text, padding, "");
+}
 
 void header() {
-	printf("=======================================\n");
-	printf("||        PERPUSTAKAAN HITAM         ||\n");
-	printf("=======================================\n\n");
+    printf(CYAN "=======================================\n" RESET);
+    printf(CYAN "||" RESET YELLOW "        PERPUSTAKAAN HITAM         " RESET CYAN "||\n" RESET);
+    printf(CYAN "=======================================\n" RESET);
+}
+
+void menuUtama() {
+    printf(CYAN "||" RESET GREEN "            MENU UTAMA             " RESET CYAN "||\n" RESET);
+    printf(CYAN "=======================================\n" RESET);
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n" RESET, BLUE "[1]" RESET, "Manajemen Member");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n" RESET, BLUE "[2]" RESET, "Manajemen Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n" RESET, BLUE "[3]" RESET, "Manajemen Akun");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n" RESET, RED "[0]" RESET, "Keluar");
+    printf(CYAN "---------------------------------------\n\n" RESET);
 }
 
 void clear() {
@@ -17,16 +35,6 @@ void clear() {
 #else
 	system("clear");
 #endif
-}
-
-void menuUtama() {
-	printf("\nMenu Utama:\n");
-	printf("--------------------------------\n");
-	printf("[1] : Manajemen Member\n");
-	printf("[2] : Manajemen Buku\n");
-	printf("[3] : Manajemen Akun\n");
-	printf("[0] : Keluar\n");
-	printf("--------------------------------\n");
 }
 
 int login();
@@ -126,7 +134,9 @@ int login() {
 						case 4:
 							daftarPeminjamAktif();
 							break;
-
+						case 5:
+							kembalikanBuku();
+							break;
 						default:
 							break;
 						}

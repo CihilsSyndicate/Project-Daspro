@@ -91,7 +91,7 @@ int findMember(){
             printf("Member yang anda cari Nomor : %d \n", arrMemberIndex);
             printf("Nama Member : %s \n", member[arrMemberIndex - 1].dataMember.namaLengkap);
             printf("Alamat Member : %s, %s, %s \n", member[arrMemberIndex - 1].dataMember.alamatUser.namaJalan, member[arrMemberIndex - 1].dataMember.alamatUser.kota,  member[arrMemberIndex - 1].dataMember.alamatUser.provinsi);
-            return arrMemberIndex+=1;
+            return arrMemberIndex;
         }else{
             printf("Member out of range, Please check it again ! \n");
         }
@@ -108,7 +108,7 @@ void menuMember(){
     printf("[1] : Tambah Member\n");
     printf("[2] : Tampilkan Semua Member\n");
     printf("[3] : Cari Member\n");
-    printf("[0] : Keluar\n");
+    printf("[0] : Kembali Ke Menu Utama\n");
     printf("--------------------------------\n");
 }
 
@@ -135,7 +135,7 @@ void menuUser(){
     printf("--------------------------------\n");
     printf("[1] : Ganti Password\n");
     // printf("[2] : Tampilkan Semua Buku\n");
-    // printf("[0] : Keluar\n");
+    printf("[0] : Kembali ke Menu Utama\n");
     printf("--------------------------------\n");
 }
 
