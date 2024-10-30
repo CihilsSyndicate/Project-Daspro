@@ -230,8 +230,8 @@ void daftarPeminjamAktif() {
     printf("===============================================\n");
 }
 
-
 void kembalikanBuku(){
+    int bukuKembali;
     if(peminjam > 0){
         int findIndexMember = findMember();
         for(int i = 0; i < peminjam; i++){
@@ -240,7 +240,20 @@ void kembalikanBuku(){
                 printf("Data buku dipinjam : \n");
                 for(int j = 0; j < dataPinjam[i].totalPinjaman; j++){
                     printf("Buku %d : %s \n", j+1, buku[dataPinjam[i].bukuIndex[j]].judulBuku);
+                    printf("Masukan Nomer buku yang akan Dikembalikan: ");
+                    scanf("%d", &bukuKembali);
+                    
+                    buku[dataPinjam[i].bukuIndex[bukuKembali - 1]].jumlah++;
+                    for (int k = bukuKembali - 1; i < dataPinjam[i].totalPinjaman - 1; k++)
+                    {
+                        dataPinjam[i].bukuIndex[k] = dataPinjam[i].bukuIndex[k + 1];
+                    }
+                    
                 }
+                        dataPinjam[i].totalPinjaman--;
+                
+
+                
             }else{
                 printf("Member ini tidak meminjam buku \n");
             }
