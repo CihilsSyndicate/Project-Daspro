@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "user.h"
+#include <stdlib.h>
 
 struct Book
 {
@@ -16,6 +18,7 @@ struct PinjamBuku{
     int memberIndex;
     int bukuIndex[10];
     int totalPinjaman;
+    char* tanggalPinjam;
 };
 
 struct Book buku[100];
@@ -25,6 +28,38 @@ struct PinjamBuku dataPinjam[100];
 int peminjam = 0;
 int totalBuku = 0;
 
+
+char* getCurrentDate() {
+    time_t currentTime;
+    struct tm* localTime;
+    currentTime = time(NULL);
+    localTime = localtime(&currentTime);
+
+    char monthName[10];
+    int year = localTime->tm_year + 1900;
+    int date = localTime->tm_mday;
+
+    switch (localTime->tm_mon) {
+        case 0: strcpy(monthName, "Januari"); break;
+        case 1: strcpy(monthName, "Februari"); break;
+        case 2: strcpy(monthName, "Maret"); break;
+        case 3: strcpy(monthName, "April"); break;
+        case 4: strcpy(monthName, "Mei"); break;
+        case 5: strcpy(monthName, "Juni"); break;
+        case 6: strcpy(monthName, "Juli"); break;
+        case 7: strcpy(monthName, "Agustus"); break;
+        case 8: strcpy(monthName, "September"); break;
+        case 9: strcpy(monthName, "Oktober"); break;
+        case 10: strcpy(monthName, "November"); break;
+        case 11: strcpy(monthName, "Desember"); break;
+    }
+
+    char* currentDate = (char*) malloc(30 * sizeof(char));
+    sprintf(currentDate, "%02d %s %d", date, monthName, year);
+    // printf("%s\n", currentDate);
+    return currentDate;
+    // return 0;
+}
 
 void bukuSementara(){
     strcpy(buku[0].judulBuku, "Laskar Pelangi");
@@ -168,6 +203,7 @@ void pinjamkanBuku() {
                             buku[bookIndex].jumlah--;
                             bookNumber++;
                             isMemberFound = true;
+
                             printf("Buku berhasil ditambahkan ke daftar pinjam\n");
                             break;
                         }

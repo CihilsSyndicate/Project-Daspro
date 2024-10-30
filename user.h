@@ -4,11 +4,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "colors.h"
 
 struct Alamat{
     char namaJalan[100];
     char kota[40];
-    char provinsi[30];
+    char provinsi[30];  
 };
 
 struct User{
@@ -36,29 +37,38 @@ void addMember(){
     bool isFinishAddUser = false;
     int intForBool = 1;
     do{
-        printf("Masukkan data Member \n");
+        printf(CYAN "=========================================\n" RESET);
+        printf(CYAN "||" RESET GREEN "       FORM INPUT DATA MEMBER        " RESET CYAN "||\n" RESET);
+        printf(CYAN "=========================================\n" RESET);
 
-        printf("Masukkan nama Member : ");
+        printf(CYAN "| %-37s |\n", "Masukkan data Member");
+        printf(CYAN "|---------------------------------------|\n" RESET);
+
+        printf(CYAN "| %-28s: " RESET, "Masukkan nama Member");
         fgets(member[totalMember].dataMember.namaLengkap, sizeof(member[totalMember].dataMember.namaLengkap), stdin);
-        member[totalMember].dataMember.namaLengkap[strlen(member[totalMember].dataMember.namaLengkap) -  1] = '\0';
+        
+        member[totalMember].dataMember.namaLengkap[strlen(member[totalMember].dataMember.namaLengkap) - 1] = '\0';
+        printf(CYAN "|---------------------------------------|\n" RESET);
+        printf(CYAN "| %-37s |\n", "Alamat Member");
+        printf(CYAN "|---------------------------------------|\n" RESET);
 
-        printf("Masukkan alamat Member : \n");
-
-        printf("Masukkan Nama Jalan : ");
+        printf(CYAN "| %-28s: " RESET, "Nama Jalan");
         fgets(member[totalMember].dataMember.alamatUser.namaJalan, sizeof(member[totalMember].dataMember.alamatUser.namaJalan), stdin);
 
-        printf("Masukkan Nama Kota : ");
+        printf(CYAN "| %-28s: " RESET, "Nama Kota");
         fgets(member[totalMember].dataMember.alamatUser.kota, sizeof(member[totalMember].dataMember.alamatUser.kota), stdin);
 
-        printf("Masukkan Nama Provinsi : ");
+        printf(CYAN "| %-28s: " RESET, "Nama Provinsi");
         fgets(member[totalMember].dataMember.alamatUser.provinsi, sizeof(member[totalMember].dataMember.alamatUser.provinsi), stdin);
+
+        printf(CYAN "---------------------------------------\n\n" RESET);
 
         printf("Apakah anda akan menambah data Member lagi ? [1 / 0] : ");
         scanf("%d", &intForBool);
         getchar();
 
         if(intForBool == 0){
-            printf("Anda keluar dari menu tambah member! \n");
+            printf(RED "Anda keluar dari menu tambah member! \n" RESET);
             isFinishAddUser = true;
         }
 
@@ -102,15 +112,18 @@ int findMember(){
 
 }
 
-void menuMember(){
-    printf("\nMenu Member:\n");
-    printf("--------------------------------\n");
-    printf("[1] : Tambah Member\n");
-    printf("[2] : Tampilkan Semua Member\n");
-    printf("[3] : Cari Member\n");
-    printf("[0] : Kembali Ke Menu Utama\n");
-    printf("--------------------------------\n");
+void menuMember() {
+    printf(CYAN "||" RESET GREEN "            MENU MEMBER            " RESET CYAN "||\n" RESET);
+    printf(CYAN "=======================================\n" RESET);
+    
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[1]" RESET, "Tambah Member");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[2]" RESET, "Tampilkan Semua Member");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[3]" RESET, "Cari Member");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", RED "[0]" RESET, "Kembali Ke Menu Utama");
+    
+   printf(CYAN "---------------------------------------\n\n" RESET);
 }
+
 
 void seedUser(){
     strcpy(admin[0].email,"admin@example.org");
