@@ -230,36 +230,48 @@ void daftarPeminjamAktif() {
     printf("===============================================\n");
 }
 
-void kembalikanBuku(){
+void kembalikanBuku() {
     int bukuKembali;
-    if(peminjam > 0){
+    if (peminjam > 0) {
         int findIndexMember = findMember();
-        for(int i = 0; i < peminjam; i++){
-            if(findIndexMember-1 == dataPinjam[i].memberIndex){
-                printf("\nPeminjam %d. Nama : %s \n", i+1, member[findIndexMember-1].dataMember.namaLengkap);
+        for (int i = 0; i < peminjam; i++) {
+            if (findIndexMember - 1 == dataPinjam[i].memberIndex) {
+                printf("\nPeminjam %d. Nama : %s \n", i + 1, member[findIndexMember - 1].dataMember.namaLengkap);
                 printf("Data buku dipinjam : \n");
-                for(int j = 0; j < dataPinjam[i].totalPinjaman; j++){
-                    printf("Buku %d : %s \n", j+1, buku[dataPinjam[i].bukuIndex[j]].judulBuku);
-                    printf("Masukan Nomer buku yang akan Dikembalikan: ");
-                    scanf("%d", &bukuKembali);
-                    
+                for (int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
+                    printf("Buku %d : %s \n", j + 1, buku[dataPinjam[i].bukuIndex[j]].judulBuku);
+                }
+
+                printf("Masukan Nomor buku yang akan Dikembalikan: ");
+                scanf("%d", &bukuKembali);
+                getchar();
+
+              
                     buku[dataPinjam[i].bukuIndex[bukuKembali - 1]].jumlah++;
-                    for (int k = bukuKembali - 1; i < dataPinjam[i].totalPinjaman - 1; k++)
-                    {
-                        dataPinjam[i].bukuIndex[k] = dataPinjam[i].bukuIndex[k + 1];
+
+                    for (int j = bukuKembali - 1; j < dataPinjam[i].totalPinjaman - 1; j++) {
+                        dataPinjam[i].bukuIndex[j] = dataPinjam[i].bukuIndex[j + 1];
                     }
                     
-                }
-                        dataPinjam[i].totalPinjaman--;
-                
 
-                
-            }else{
-                printf("Member ini tidak meminjam buku \n");
+                    dataPinjam[i].totalPinjaman--;
+
+                    printf("Buku berhasil dikembalikan!\n");
+
+
+                    if (dataPinjam[i].totalPinjaman == 0) {
+                        
+                        for (int k = i; k < peminjam - 1; k++) {
+                            dataPinjam[k] = dataPinjam[k + 1];
+                        }
+                        peminjam--; 
+                        printf("Member sudah tidak memiliki pinjaman buku.\n");
+                    }
+            
             }
         }
-    }else{
-        printf("Tidak ada data peminjam \n");
+        printf("Member ini tidak meminjam buku\n");
+    } else {
+        printf("Tidak ada data peminjam\n");
     }
 }
-
