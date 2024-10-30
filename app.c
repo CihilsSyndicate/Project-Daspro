@@ -65,13 +65,18 @@ int login() {
 				menuUtama();
 
 				printf("\nPilih menu: ");
-				scanf("%d", &menu);
-				getchar();
+				char menuInput[10];
+				fgets(menuInput, sizeof(menuInput), stdin);
 
-
+				if (sscanf(menuInput, "%d", &menu) != 1) {
+					printf("Input tidak valid. Harap masukkan angka.\n");
+					printf("\nTekan Enter untuk melanjutkan...");
+					getchar();
+					continue; 
+				}
 				switch(menu) {
 				case 1:
-					
+					// Menu Member
 					exitSubMenu = 0;
 					int subMenu = 0;  
 					do {
@@ -79,8 +84,14 @@ int login() {
 						header();
 						menuMember();
 						printf("\nPilih sub-menu: ");
-						scanf("%d", &subMenu);
-						getchar();
+						fgets(menuInput, sizeof(menuInput), stdin);
+
+						if (sscanf(menuInput, "%d", &subMenu) != 1) {
+							printf("Input tidak valid. Harap masukkan angka.\n");
+							printf("\nTekan Enter untuk melanjutkan...");
+							getchar();
+							continue;
+						}
 
 						switch (subMenu) {
 						case 1:
@@ -106,8 +117,8 @@ int login() {
 						}
 
 					} while (!exitSubMenu);
-
 					break;
+
 				case 2:
 					// Menu Buku
 					exitSubMenu = 0;
@@ -117,8 +128,14 @@ int login() {
 						header();
 						menuBuku();
 						printf("\nPilih sub-menu: ");
-						scanf("%d", &subMenu);
-						getchar();
+						fgets(menuInput, sizeof(menuInput), stdin);
+
+						if (sscanf(menuInput, "%d", &subMenu) != 1) {
+							printf("Input tidak valid. Harap masukkan angka.\n");
+							printf("\nTekan Enter untuk melanjutkan...");
+							getchar();
+							continue;
+						}
 
 						switch (subMenu) {
 						case 1:
@@ -150,8 +167,8 @@ int login() {
 						}
 
 					} while (!exitSubMenu);
-
 					break;
+
 				case 3:
 					// Menu User
 					exitSubMenu = 0;
@@ -161,10 +178,16 @@ int login() {
 						header();
 						menuUser();
 						printf("\nPilih sub-menu: ");
-						scanf("%d", &subMenu);
-						getchar();
-						bool isRelog = false;
+						fgets(menuInput, sizeof(menuInput), stdin);
 
+						if (sscanf(menuInput, "%d", &subMenu) != 1) {
+							printf("Input tidak valid. Harap masukkan angka.\n");
+							printf("\nTekan Enter untuk melanjutkan...");
+							getchar();
+							continue;
+						}
+
+						bool isRelog = false;
 						do {
 							switch (subMenu) {
 							case 1:
@@ -187,26 +210,28 @@ int login() {
 
 							if(isRelog && subMenu != 0) {
 								clear();
-								printf("Password berhasil diubah, Silakan Login Kembali ! \n");
+								printf("Password berhasil diubah, Silakan Login Kembali!\n");
 								login();
 							}
 						} while(!isRelog && subMenu != 0);
 
 					} while (!exitSubMenu);
-
 					break;
+
 				case 0:
-						printf("See ya!\n");
-						isExit = true;
-						break;
+					printf("See ya!\n");
+					isExit = true;
+					break;
+
 				default:
 					printf("Pilihan anda tidak valid\n");
-					printf("\nTekan Enter untuk melanjutkan..");
+					printf("\nTekan Enter untuk melanjutkan...");
 					getchar();
 					break;
 				}
 
 			} while(!isExit);
+
 			break;
 		} else {
 			clear();
