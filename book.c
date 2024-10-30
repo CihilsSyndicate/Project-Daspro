@@ -246,28 +246,29 @@ void kembalikanBuku() {
                 scanf("%d", &bukuKembali);
                 getchar();
 
-              
+                if (bukuKembali > 0 && bukuKembali <= dataPinjam[i].totalPinjaman) {
                     buku[dataPinjam[i].bukuIndex[bukuKembali - 1]].jumlah++;
 
                     for (int j = bukuKembali - 1; j < dataPinjam[i].totalPinjaman - 1; j++) {
                         dataPinjam[i].bukuIndex[j] = dataPinjam[i].bukuIndex[j + 1];
                     }
                     
-
                     dataPinjam[i].totalPinjaman--;
 
                     printf("Buku berhasil dikembalikan!\n");
 
-
                     if (dataPinjam[i].totalPinjaman == 0) {
-                        
+
                         for (int k = i; k < peminjam - 1; k++) {
                             dataPinjam[k] = dataPinjam[k + 1];
                         }
-                        peminjam--; 
+                        peminjam--;
                         printf("Member sudah tidak memiliki pinjaman buku.\n");
                     }
-            
+                } else {
+                    printf("Nomor buku tidak valid!\n");
+                }
+                return;
             }
         }
         printf("Member ini tidak meminjam buku\n");
