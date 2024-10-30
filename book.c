@@ -146,31 +146,42 @@ int findBook(){
 
 
 }
-
-void pinjamkanBuku(){
+void pinjamkanBuku() {
     int memberIndex = findMember();
     int bookIndex;
-    if(memberIndex > 0){
+    if (memberIndex > 0) {
         int bookNumber = 0;
         char finishPinjamChar;
         bool isFinishPinjam = false;
-        memberIndex -= 1;
+        bool isMemberFound = false;
         
-        dataPinjam[peminjam].memberIndex = memberIndex;
-        // dataPinjam[peminjam].totalPinjaman = 0;
-        
-        do{
+        do {
             bookIndex = findBook();
-            if(bookIndex > 0) {
-                bookIndex -= 1;  
+            if (bookIndex > 0) {
+                bookIndex -= 1;
 
-                if(buku[bookIndex].jumlah > 0) {
-                    dataPinjam[peminjam].bukuIndex[bookNumber] = bookIndex;
-                    dataPinjam[peminjam].totalPinjaman+=1; //Debug here
-                    buku[bookIndex].jumlah--;
-                    bookNumber++;
-                    
-                    printf("Buku berhasil ditambahkan ke daftar pinjam \n");
+                if (buku[bookIndex].jumlah > 0) {
+                    for (int i = 0; i < peminjam; i++) {
+                        if (dataPinjam[i].memberIndex == memberIndex - 1) {
+                            dataPinjam[i].bukuIndex[dataPinjam[i].totalPinjaman] = bookIndex;
+                            dataPinjam[i].totalPinjaman++;
+                            buku[bookIndex].jumlah--;
+                            bookNumber++;
+                            isMemberFound = true;
+                            printf("Buku berhasil ditambahkan ke daftar pinjam\n");
+                            break;
+                        }
+                    }
+
+                    if (!isMemberFound) {
+                        dataPinjam[peminjam].memberIndex = memberIndex - 1;
+                        dataPinjam[peminjam].bukuIndex[dataPinjam[peminjam].totalPinjaman] = bookIndex;
+                        dataPinjam[peminjam].totalPinjaman++;
+                        buku[bookIndex].jumlah--;
+                        bookNumber++;
+                        peminjam++;
+                        printf("Buku berhasil ditambahkan ke daftar pinjam\n");
+                    }
                 } else {
                     printf("Maaf, stok buku tidak tersedia\n");
                 }
@@ -180,25 +191,13 @@ void pinjamkanBuku(){
             scanf(" %c", &finishPinjamChar);
             getchar();
 
-            if(finishPinjamChar != 'y'){
+            if (finishPinjamChar != 'y') {
                 isFinishPinjam = true;
             }
-
-            peminjam++;
-            for(int i = 0; i < peminjam; i++){
-                if(dataPinjam[i].memberIndex == memberIndex) {
-                    if(dataPinjam[i].totalPinjaman <= 1){
-                        peminjam--;
-                    }
-                }
-                printf("Total Pinjam : %d \n", dataPinjam[i].totalPinjaman);
-            }
-
-        } while(!isFinishPinjam && bookNumber < 10);
-        
-        printf("\nPeminjaman berhasil dicatat!\n");
+        } while (!isFinishPinjam && bookNumber < 10);
 
     }
+        printf("\nPeminjaman berhasil dicatat!\n");
 }
 
 void daftarPeminjamAktif() {
@@ -209,11 +208,11 @@ void daftarPeminjamAktif() {
             printf("Peminjam ke-%d:\n", i + 1);
             printf("----------------------------------------\n");
             printf("Nama Peminjam: %s\n", 
-                   member[dataPinjam[i].memberIndex - 1].dataMember.namaLengkap);
+                   member[dataPinjam[i].memberIndex].dataMember.namaLengkap);
             printf("Alamat: %s, %s, %s\n",
-                   member[dataPinjam[i].memberIndex - 1].dataMember.alamatUser.namaJalan,
-                   member[dataPinjam[i].memberIndex - 1].dataMember.alamatUser.kota,
-                   member[dataPinjam[i].memberIndex - 1].dataMember.alamatUser.provinsi);
+                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.namaJalan,
+                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.kota,
+                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.provinsi);
             
             printf("\nBuku yang dipinjam:\n");
             for(int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
@@ -250,3 +249,4 @@ void kembalikanBuku(){
         printf("Tidak ada data peminjam \n");
     }
 }
+
