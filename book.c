@@ -79,39 +79,40 @@ void bukuSementara(){
 
 void tambahBuku(){
     char isFinish = 'y';
-    if(totalBuku >= 100){
-        printf("Jumlah buku sudah mencapai batas!!");
-    }
 
-    do{
-        printf("\n====== Tambah Buku ======\n");
+        while (isFinish == 'y' && totalBuku <= 3){
+            if(totalBuku >= 3){
+                printf("Jumlah buku sudah mencapai batas!!");
+                break;
+            }else{
+                printf("\n====== Tambah Buku ======\n");
+                printf("Masukan Judul: ");
+                fgets(buku[totalBuku].judulBuku, sizeof(buku[totalBuku].judulBuku), stdin);
+                buku[totalBuku].judulBuku[strlen(buku[totalBuku].judulBuku) - 1] = '\0';
 
-        printf("Masukan Judul: ");
-        fgets(buku[totalBuku].judulBuku, sizeof(buku[totalBuku].judulBuku), stdin);
-        buku[totalBuku].judulBuku[strlen(buku[totalBuku].judulBuku) - 1] = '\0';
+                printf("Masukan Nama Penerbit: ");
+                fgets(buku[totalBuku].penerbit, sizeof(buku[totalBuku].penerbit), stdin);
+                buku[totalBuku].penerbit[strlen(buku[totalBuku].penerbit) - 1] = '\0';
 
-        printf("Masukan Nama Penerbit: ");
-        fgets(buku[totalBuku].penerbit, sizeof(buku[totalBuku].penerbit), stdin);
-        buku[totalBuku].penerbit[strlen(buku[totalBuku].penerbit) - 1] = '\0';
+                printf("Masukan Genre: ");
+                fgets(buku[totalBuku].genre, sizeof(buku[totalBuku].genre), stdin);
+                buku[totalBuku].genre[strlen(buku[totalBuku].genre) - 1] = '\0';
 
-        printf("Masukan Genre: ");
-        fgets(buku[totalBuku].genre, sizeof(buku[totalBuku].genre), stdin);
-        buku[totalBuku].genre[strlen(buku[totalBuku].genre) - 1] = '\0';
+                printf("Masukan Nama Pengarang: ");
+                fgets(buku[totalBuku].pengarang, sizeof(buku[totalBuku].pengarang), stdin);
+                buku[totalBuku].pengarang[strlen(buku[totalBuku].pengarang) - 1] = '\0';
 
-        printf("Masukan Nama Pengarang: ");
-        fgets(buku[totalBuku].pengarang, sizeof(buku[totalBuku].pengarang), stdin);
-        buku[totalBuku].pengarang[strlen(buku[totalBuku].pengarang) - 1] = '\0';
+                printf("Masukan Jumlah Buku: ");
+                scanf("%d", &buku[totalBuku].jumlah);
+                getchar();
 
-        printf("Masukan Jumlah Buku: ");
-        scanf("%d", &buku[totalBuku].jumlah);
-        getchar();
+                totalBuku++;
 
-        totalBuku++;
-
-        printf("Apakah anda ingin menambahkan buku lagi?(y/t): ");
-        scanf("%c", &isFinish);
-        getchar();
-    }while (isFinish == 'y');
+                printf("Apakah anda ingin menambahkan buku lagi?(y/t): ");
+                scanf("%c", &isFinish);
+                getchar();
+            }
+        }
 
 }
 
