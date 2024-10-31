@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 #include "colors.h"
 
 struct Alamat{
@@ -106,32 +107,55 @@ void getDataMember() {
 }
 
 
-
-
-int findMember(){
-    int arrMemberIndex;
-    getDataMember();
-
-    if(totalMember > 0){
-        printf("Cari data Member berdasarkan Nomor : ");
-        scanf("%d", &arrMemberIndex);
-        getchar();
-
-        if(arrMemberIndex <= totalMember && arrMemberIndex > 0){
-            printf("Member yang anda cari Nomor : %d \n", arrMemberIndex);
-            printf("Nama Member : %s \n", member[arrMemberIndex - 1].dataMember.namaLengkap);
-            printf("Alamat Member : %s, %s, %s \n", member[arrMemberIndex - 1].dataMember.alamatUser.namaJalan, member[arrMemberIndex - 1].dataMember.alamatUser.kota,  member[arrMemberIndex - 1].dataMember.alamatUser.provinsi);
-            return arrMemberIndex;
-        }else{
-            printf("Member out of range, Please check it again ! \n");
-        }
-    }else{
-        return 0;
+void toLowerCase(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = tolower((unsigned char)str[i]);
     }
-
-
 }
 
+int findMember() {
+    char searchName[50];
+    getDataMember();
+
+    if (totalMember > 0) {
+        printf("Cari data Member berdasarkan Nama: ");
+        fgets(searchName, sizeof(searchName), stdin);
+        searchName[strcspn(searchName, "\n")] = 0; 
+
+        toLowerCase(searchName);
+
+        for (int i = 0; i < totalMember; i++) {
+            char memberName[50];
+            strcpy(memberName, member[i].dataMember.namaLengkap);
+            toLowerCase(memberName);
+
+            if (strcmp(searchName, memberName) == 0) {
+                printf(CYAN "============================================================================================================\n" RESET);
+                printf(CYAN "||" RESET YELLOW "                                          PERPUSTAKAAN HITAM                                            " RESET CYAN "||\n" RESET);
+                printf(CYAN "============================================================================================================\n" RESET);
+                printf(CYAN "||" RESET YELLOW "                                           HASIL PENCARIAN                                             " RESET CYAN "||\n" RESET);
+                printf(CYAN "============================================================================================================\n" RESET);
+                printf(CYAN "| " RESET GREEN "%-5s" RESET CYAN " | " RESET GREEN "%-25s" RESET CYAN " | " RESET GREEN "%-20s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-27s" RESET CYAN " |\n" RESET,
+                       "No", "Nama Lengkap", "Nama Jalan", "Kota", "Provinsi");
+                printf(CYAN "============================================================================================================\n" RESET);
+
+                printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-27s" CYAN " |\n" RESET, 
+                       i + 1,
+                       member[i].dataMember.namaLengkap,
+                       member[i].dataMember.alamatUser.namaJalan,
+                       member[i].dataMember.alamatUser.kota,
+                       member[i].dataMember.alamatUser.provinsi);
+
+                printf(CYAN "------------------------------------------------------------------------------------------------------------\n\n" RESET);
+                return i + 1; 
+            }
+        }
+        printf("Member tidak ditemukan, coba periksa kembali!\n");
+    } else {
+        printf("Tidak ada data member.\n");
+    }
+    return 0;
+}
 void menuMember() {
     printf(CYAN "||" RESET GREEN "            MENU MEMBER            " RESET CYAN "||\n" RESET);
     printf(CYAN "=======================================\n" RESET);
