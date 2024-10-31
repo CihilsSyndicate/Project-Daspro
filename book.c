@@ -181,6 +181,7 @@ int findBook(){
 
 
 }
+
 void pinjamkanBuku() {
     int memberIndex = findMember();
     int bookIndex;
@@ -200,6 +201,7 @@ void pinjamkanBuku() {
                         if (dataPinjam[i].memberIndex == memberIndex - 1) {
                             dataPinjam[i].bukuIndex[dataPinjam[i].totalPinjaman] = bookIndex;
                             dataPinjam[i].totalPinjaman++;
+                            dataPinjam[i].tanggalPinjam = getCurrentDate();
                             buku[bookIndex].jumlah--;
                             bookNumber++;
                             isMemberFound = true;
@@ -256,7 +258,9 @@ void daftarPeminjamAktif() {
                        j + 1, 
                        buku[dataPinjam[i].bukuIndex[j]].judulBuku,
                        buku[dataPinjam[i].bukuIndex[j]].pengarang);
+                    
             }
+            printf("Tanggal Pinjam : %s \n", dataPinjam[i].tanggalPinjam);
             printf("----------------------------------------\n\n");
         }
         printf("Total Peminjam Aktif: %d\n", peminjam);

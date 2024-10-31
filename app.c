@@ -45,19 +45,19 @@ int login() {
 	int isExitNum = 0;
 	bool isExit = false;
 	int loginAttempt = 0;
-	do {
-		char email[50], password[50];
-		header();
+	// do {
+	// 	char email[50], password[50];
+	// 	header();
 
-		printf("Masukkan Email anda : ");
-		fgets(email, sizeof(email), stdin);
-		email[strlen(email) - 1] = '\0';
+	// 	printf("Masukkan Email anda : ");
+	// 	fgets(email, sizeof(email), stdin);
+	// 	email[strlen(email) - 1] = '\0';
 
-		printf("Masukkan Password anda : ");
-		fgets(password, sizeof(password), stdin);
-		password[strlen(password) - 1] = '\0';
+	// 	printf("Masukkan Password anda : ");
+	// 	fgets(password, sizeof(password), stdin);
+	// 	password[strlen(password) - 1] = '\0';
 
-		if(strcmp(email, admin[0].email) == 0 && strcmp(password, admin[0].password) == 0) {
+	// 	if(strcmp(email, admin[0].email) == 0 && strcmp(password, admin[0].password) == 0) {
 			do {
 				int exitSubMenu = 0;         
 				clear();
@@ -232,17 +232,17 @@ int login() {
 
 			} while(!isExit);
 
-			break;
-		} else {
-			clear();
-			printf("Data yang anda masukkan salah, coba lagi \n");
-			loginAttempt++;
-		}
-	} while(loginAttempt < 3);
+	// 		break;
+	// 	} else {
+	// 		clear();
+	// 		printf("Data yang anda masukkan salah, coba lagi \n");
+	// 		loginAttempt++;
+	// 	}
+	// } while(loginAttempt < 3);
 
-	if (loginAttempt >= 3) {
-		printf("Akun anda telah diblokir \n");
-	}
+	// if (loginAttempt >= 3) {
+	// 	printf("Akun anda telah diblokir \n");
+	// }
 	return 0;
 }
 
