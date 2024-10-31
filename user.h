@@ -29,7 +29,7 @@ struct Member{
 };
 
 
-struct Member member[100];
+struct Member member[100];  
 struct Admin admin[1];
 int totalMember = 0;
 
@@ -77,16 +77,36 @@ void addMember(){
     }while(!isFinishAddUser);
 }
 
-int getDataMember(){
-    if(totalMember > 0){
-        for(int i = 0; i < totalMember; i++){
-            printf("[%d]. %s, %s \n",i+1, member[i].dataMember.namaLengkap, member[i].dataMember.alamatUser.kota,  member[i].dataMember.alamatUser.provinsi);
+void getDataMember() {
+    if (totalMember > 0) {
+        
+        printf(CYAN "============================================================================================================\n" RESET);
+        printf(CYAN "||" RESET YELLOW "                                          PERPUSTAKAAN HITAM                                            " RESET CYAN "||\n" RESET);
+        printf(CYAN "============================================================================================================\n" RESET);
+        printf(CYAN "||" RESET YELLOW "                                             DAFTAR MEMBER                                              " RESET CYAN "||\n" RESET);
+        printf(CYAN "============================================================================================================\n" RESET);
+ 
+        printf(CYAN "| " RESET GREEN "%-5s" RESET CYAN " | " RESET GREEN "%-25s" RESET CYAN " | " RESET GREEN "%-20s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-27s" RESET CYAN " |\n" RESET,
+               "No", "Nama Lengkap", "Nama Jalan", "Kota", "Provinsi");
+        printf(CYAN "============================================================================================================\n" RESET);
+
+        for (int i = 0; i < totalMember; i++) {
+            printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-27s" CYAN " |\n" RESET, 
+                   i + 1,
+                   member[i].dataMember.namaLengkap,
+                   member[i].dataMember.alamatUser.namaJalan,
+                   member[i].dataMember.alamatUser.kota,
+                   member[i].dataMember.alamatUser.provinsi);
         }
-    }else{
-        printf("Data member kosong ! \n");
-        return 0;
+
+        printf(CYAN "------------------------------------------------------------------------------------------------------------\n\n" RESET);
+    } else {
+        printf(RED "Data member kosong!\n" RESET);
     }
 }
+
+
+
 
 int findMember(){
     int arrMemberIndex;

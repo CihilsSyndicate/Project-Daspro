@@ -4,6 +4,8 @@
 #include "book.c"
 #include "user.h"
 #include "colors.h"
+#include <windows.h>
+#include <mmsystem.h>
 
 
 void printCentered(const char* text, int width) {
@@ -219,7 +221,15 @@ int login() {
 					break;
 
 				case 0:
-					printf("See ya!\n");
+				    printf(RED " _____        _                           _     _____  _                              _  _ \n" RESET);
+					printf(RED "/  ___|      | |                         | |   |_   _|(_)                            | || | \n" RESET);
+					printf(RED "\\ `--.   ___ | |  __ _  _ __ ___    __ _ | |_    | |   _  _ __    __ _   __ _   __ _ | || | \n" RESET);
+					printf(RED " `--. \\ / _ \\| | / _` || '_ ` _ \\  / _` || __|   | |  | || '_ \\  / _` | / _` | / _` || || |\n" RESET);
+					printf(RED "/\\__/ /|  __/| || (_| || | | | | || (_| || |_    | |  | || | | || (_| || (_| || (_| || ||_|\n" RESET);
+					printf(RED "\\____/  \\___||_| \\__,_||_| |_| |_| \\__,_| \\__|   \\_/  |_||_| |_| \\__, | \\__, | \\__,_||_|(_)\n" RESET);
+					printf(RED "                                                                  __/ |  __/ |             \n" RESET);
+					printf(RED "                                                                 |___/  |___/      \n\n" RESET);
+
 					isExit = true;
 					break;
 
@@ -246,10 +256,17 @@ int login() {
 	return 0;
 }
 
+void playBackgroundMusic() {
+  
+    PlaySound("bgm.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+}
+
 int main() {
 
+ 	// playBackgroundMusic();
 	bukuSementara();
 	seedUser();
 	seedMember();
 	login();
+	// PlaySound(NULL, 0, 0);
 }
