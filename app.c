@@ -6,7 +6,7 @@
 #include "colors.h"
 #include <windows.h>
 #include <mmsystem.h>
-#include "cJSON.h"
+
 
 
 
@@ -258,10 +258,10 @@ int login() {
 	return 0;
 }
 
-void playBackgroundMusic() {
+// void playBackgroundMusic() {
   
-    PlaySound("bgm.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
-}
+//     PlaySound("bgm.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+// }
 
 int main() {
 
