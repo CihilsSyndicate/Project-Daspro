@@ -1,57 +1,27 @@
-#include <stdio.h>
-#include <time.h>
-#include <string.h>
-#include <stdlib.h>
+#include <stdio.h> 
+#include "cJSON.h"
 
-// int main() {
-//     int *numbers;
-//     numbers = (int)malloc(50 * sizeof(int));
+int main() { 
+// create a cJSON object 
+cJSON *json = cJSON_CreateObject(); 
+cJSON_AddStringToObject(json, "name", "John Doe"); 
+cJSON_AddNumberToObject(json, "age", 30); 
+cJSON_AddStringToObject(json, "email", "john.doe@example.com"); 
 
-//     numbers[0] = 1;
+// convert the cJSON object to a JSON string 
+char *json_str = cJSON_Print(json); 
 
-//     return 0;
-// }
-
-typedef struct {
-    char* tanggal;
-}Konz;
-
-char* getCurrentDate() {
-    time_t currentTime;
-    struct tm* localTime;
-    currentTime = time(NULL);
-    localTime = localtime(&currentTime);
-
-    char monthName[10];
-    int year = localTime->tm_year + 1900;
-    int date = localTime->tm_mday;
-
-    switch (localTime->tm_mon) {
-        case 0: strcpy(monthName, "Januari"); break;
-        case 1: strcpy(monthName, "Februari"); break;
-        case 2: strcpy(monthName, "Maret"); break;
-        case 3: strcpy(monthName, "April"); break;
-        case 4: strcpy(monthName, "Mei"); break;
-        case 5: strcpy(monthName, "Juni"); break;
-        case 6: strcpy(monthName, "Juli"); break;
-        case 7: strcpy(monthName, "Agustus"); break;
-        case 8: strcpy(monthName, "September"); break;
-        case 9: strcpy(monthName, "Oktober"); break;
-        case 10: strcpy(monthName, "November"); break;
-        case 11: strcpy(monthName, "Desember"); break;
-    }
-
-    char* currentDate = (char*) malloc(30 * sizeof(char));
-    sprintf(currentDate, "%02d %s %d", date, monthName, year);
-    // printf("%s\n", currentDate);
-    return currentDate;
-    // return 0;
-}
-
-int main(){
-    Konz tanggal1;
-    // char* now = getCurrentDate();
-    tanggal1.tanggal = getCurrentDate();
-    printf("%s \n", tanggal1.tanggal);
-    return 0;
+// write the JSON string to a file 
+FILE *fp = fopen("test.json", "w"); 
+if (fp == NULL) { 
+	printf("Error: Unable to open the file.\n"); 
+	return 1; 
+} 
+printf("%s\n", json_str); 
+fputs(json_str, fp); 
+fclose;
+// free the JSON string and cJSON object 
+cJSON_free(json_str); 
+cJSON_Delete(json); 
+return 0; 
 }
