@@ -18,7 +18,7 @@ struct PinjamBuku{
     int memberIndex;
     int bukuIndex[10];
     int totalPinjaman;
-    char* tanggalPinjam;
+    char tanggalPinjam[50];
 };
 
 struct Book buku[100];
@@ -205,6 +205,7 @@ int findBook() {
                        buku[i].genre,
                        buku[i].jumlah);
                 found = 1;
+                return i;
             }
         }
 
@@ -223,23 +224,30 @@ int findBook() {
 void pinjamkanBuku() {
     int memberIndex = findMember();
     int bookIndex;
-    if (memberIndex > 0) {
+    if (memberIndex >= 0) {
         int bookNumber = 0;
         char finishPinjamChar;
         bool isFinishPinjam = false;
         bool isMemberFound = false;
-        
+        bool isCurrentDateReceived = false;
+
         do {
             bookIndex = findBook();
-            if (bookIndex > 0) {
-                bookIndex -= 1;
+            if (bookIndex >= 0) {
 
                 if (buku[bookIndex].jumlah > 0) {
                     for (int i = 0; i < peminjam; i++) {
-                        if (dataPinjam[i].memberIndex == memberIndex - 1) {
+                        if (dataPinjam[i].memberIndex == memberIndex) {
                             dataPinjam[i].bukuIndex[dataPinjam[i].totalPinjaman] = bookIndex;
                             dataPinjam[i].totalPinjaman++;
-                            dataPinjam[i].tanggalPinjam = getCurrentDate();
+                            do{
+                                if(getCurrentDate()){
+                                    strcpy(dataPinjam[i].tanggalPinjam,getCurrentDate());
+                                    isCurrentDateReceived = true;
+                                }else{
+                                    isCurrentDateReceived = false;
+                                }
+                            }while(isCurrentDateReceived = false);
                             buku[bookIndex].jumlah--;
                             bookNumber++;
                             isMemberFound = true;
@@ -250,7 +258,7 @@ void pinjamkanBuku() {
                     }
 
                     if (!isMemberFound) {
-                        dataPinjam[peminjam].memberIndex = memberIndex - 1;
+                        dataPinjam[peminjam].memberIndex = memberIndex;
                         dataPinjam[peminjam].bukuIndex[dataPinjam[peminjam].totalPinjaman] = bookIndex;
                         dataPinjam[peminjam].totalPinjaman++;
                         buku[bookIndex].jumlah--;

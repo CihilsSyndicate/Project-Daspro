@@ -27,6 +27,8 @@ struct Admin{
 
 
 struct Member{
+    char kode[20];
+    char noHp[20];
     struct User dataMember;
 };
 
@@ -159,6 +161,8 @@ int findMember() {
                        member[i].dataMember.alamatUser.kecamatan,
                        member[i].dataMember.alamatUser.kota);
                 found = 1;
+
+                return i;
             }
         }
 
