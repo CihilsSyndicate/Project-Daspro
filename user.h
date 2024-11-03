@@ -10,7 +10,8 @@
 struct Alamat{
     char namaJalan[100];
     char kota[40];
-    char provinsi[30];  
+    char kelurahan[40];
+    char kecamatan[40];
 };
 
 struct User{
@@ -57,13 +58,17 @@ void addMember() {
         fgets(member[totalMember].dataMember.alamatUser.namaJalan, sizeof(member[totalMember].dataMember.alamatUser.namaJalan), stdin);
         member[totalMember].dataMember.alamatUser.namaJalan[strcspn(member[totalMember].dataMember.alamatUser.namaJalan, "\n")] = '\0';
 
+        printf(CYAN "| %-28s: " RESET, "Nama Kelurahan");
+        fgets(member[totalMember].dataMember.alamatUser.kelurahan, sizeof(member[totalMember].dataMember.alamatUser.kelurahan), stdin);
+        member[totalMember].dataMember.alamatUser.kelurahan[strcspn(member[totalMember].dataMember.alamatUser.kelurahan, "\n")] = '\0';
+
+        printf(CYAN "| %-28s: " RESET, "Nama Kecamatan");
+        fgets(member[totalMember].dataMember.alamatUser.kecamatan, sizeof(member[totalMember].dataMember.alamatUser.kecamatan), stdin);
+        member[totalMember].dataMember.alamatUser.kecamatan[strcspn(member[totalMember].dataMember.alamatUser.kecamatan, "\n")] = '\0';
+
         printf(CYAN "| %-28s: " RESET, "Nama Kota");
         fgets(member[totalMember].dataMember.alamatUser.kota, sizeof(member[totalMember].dataMember.alamatUser.kota), stdin);
         member[totalMember].dataMember.alamatUser.kota[strcspn(member[totalMember].dataMember.alamatUser.kota, "\n")] = '\0';
-
-        printf(CYAN "| %-28s: " RESET, "Nama Provinsi");
-        fgets(member[totalMember].dataMember.alamatUser.provinsi, sizeof(member[totalMember].dataMember.alamatUser.provinsi), stdin);
-        member[totalMember].dataMember.alamatUser.provinsi[strcspn(member[totalMember].dataMember.alamatUser.provinsi, "\n")] = '\0';
 
         printf(CYAN "---------------------------------------\n\n" RESET);
 
@@ -100,8 +105,9 @@ void getDataMember() {
                    i + 1,
                    member[i].dataMember.namaLengkap,
                    member[i].dataMember.alamatUser.namaJalan,
-                   member[i].dataMember.alamatUser.kota,
-                   member[i].dataMember.alamatUser.provinsi);
+                   member[i].dataMember.alamatUser.kelurahan,
+                   member[i].dataMember.alamatUser.kecamatan,
+                   member[i].dataMember.alamatUser.kota);
         }
 
         printf(CYAN "------------------------------------------------------------------------------------------------------------\n\n" RESET);
@@ -149,8 +155,9 @@ int findMember() {
                        i + 1,
                        member[i].dataMember.namaLengkap,
                        member[i].dataMember.alamatUser.namaJalan,
-                       member[i].dataMember.alamatUser.kota,
-                       member[i].dataMember.alamatUser.provinsi);
+                       member[i].dataMember.alamatUser.kelurahan,
+                       member[i].dataMember.alamatUser.kecamatan,
+                       member[i].dataMember.alamatUser.kota);
                 found = 1;
             }
         }
@@ -184,15 +191,17 @@ void seedUser(){
     strcpy(admin[0].password, "passwordsecure");
     strcpy(admin[0].dataAdmin.namaLengkap,"Admin Perpus");
     strcpy(admin[0].dataAdmin.alamatUser.namaJalan,"Gunung Roay");
+    strcpy(admin[0].dataAdmin.alamatUser.kelurahan,"Sukakarsa");
+    strcpy(admin[0].dataAdmin.alamatUser.kecamatan,"Padasuka");
     strcpy(admin[0].dataAdmin.alamatUser.kota,"Tasikmalaya");
-    strcpy(admin[0].dataAdmin.alamatUser.provinsi,"Jawa Barat");
 }
 
 void seedMember(){
     strcpy(member[0].dataMember.namaLengkap,"Ricko");
     strcpy(member[0].dataMember.alamatUser.namaJalan,"Jl.Jalan");
+    strcpy(member[0].dataMember.alamatUser.kelurahan,"Mugarsari");
+    strcpy(member[0].dataMember.alamatUser.kecamatan,"Tamansari");
     strcpy(member[0].dataMember.alamatUser.kota,"Tasikmalaya");
-    strcpy(member[0].dataMember.alamatUser.provinsi,"Jawa Barat");
 
     totalMember = 1;
 }

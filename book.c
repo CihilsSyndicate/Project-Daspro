@@ -287,8 +287,9 @@ void daftarPeminjamAktif() {
                    member[dataPinjam[i].memberIndex].dataMember.namaLengkap);
             printf("Alamat: %s, %s, %s\n",
                    member[dataPinjam[i].memberIndex].dataMember.alamatUser.namaJalan,
-                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.kota,
-                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.provinsi);
+                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.kelurahan,
+                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.kecamatan,
+                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.kota);
             
             printf("\nBuku yang dipinjam:\n");
             for(int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
