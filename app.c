@@ -236,6 +236,7 @@ int login() {
 						printf(RED "                                                                 |___/  |___/      \n\n" RESET);
 
 						isExit = true;
+						return 0;
 						break;
 
 					default:
@@ -260,7 +261,6 @@ int login() {
 	if (loginAttempt >= 3) {
 		printf("Akun anda telah diblokir \n");
 	}
-	return 0;
 }
 
 // void playBackgroundMusic() {
