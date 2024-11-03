@@ -18,7 +18,7 @@ struct PinjamBuku{
     int memberIndex;
     int bukuIndex[10];
     int totalPinjaman;
-    char tanggalPinjam[50];
+    char* tanggalPinjam;
 };
 
 struct Book buku[100];
@@ -217,7 +217,7 @@ int findBook() {
     } else {
         printf("Tidak ada data buku.\n");
     }
-    return 0;
+    // return 0;
 }
 
 
@@ -238,22 +238,7 @@ void pinjamkanBuku() {
                 if (buku[bookIndex].jumlah > 0) {
                     for (int i = 0; i < peminjam; i++) {
                         if (dataPinjam[i].memberIndex == memberIndex) {
-                            dataPinjam[i].bukuIndex[dataPinjam[i].totalPinjaman] = bookIndex;
-                            dataPinjam[i].totalPinjaman++;
-                            do{
-                                if(getCurrentDate()){
-                                    strcpy(dataPinjam[i].tanggalPinjam,getCurrentDate());
-                                    isCurrentDateReceived = true;
-                                }else{
-                                    isCurrentDateReceived = false;
-                                }
-                            }while(isCurrentDateReceived = false);
-                            buku[bookIndex].jumlah--;
-                            bookNumber++;
                             isMemberFound = true;
-
-                            printf("Buku berhasil ditambahkan ke daftar pinjam\n");
-                            break;
                         }
                     }
 
@@ -261,6 +246,7 @@ void pinjamkanBuku() {
                         dataPinjam[peminjam].memberIndex = memberIndex;
                         dataPinjam[peminjam].bukuIndex[dataPinjam[peminjam].totalPinjaman] = bookIndex;
                         dataPinjam[peminjam].totalPinjaman++;
+                        dataPinjam[peminjam].tanggalPinjam = getCurrentDate();
                         buku[bookIndex].jumlah--;
                         bookNumber++;
                         peminjam++;
