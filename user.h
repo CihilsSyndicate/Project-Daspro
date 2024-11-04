@@ -29,7 +29,7 @@ struct Admin{
 
 
 struct Member{
-    long noHp;
+    char noHp[15];
     struct User dataMember;
 };
 
@@ -92,15 +92,19 @@ void addMember() {
         bool validInput = false;
         while (!validInput) {
             printf(CYAN "| %-28s: " RESET, "Masukkan nomor Member (tanpa spasi)");
+            fgets(member[totalMember].noHp, sizeof(member[totalMember].noHp), stdin);
+            member[totalMember].noHp[strcspn(member[totalMember].noHp, "\n")] = '\0';
 
-            if (scanf("%ld", &member[totalMember].noHp) != 1) {
-                printf(RED "Silahkan masukkan angka saja.\n" RESET);
-                while (getchar() != '\n');
-            } else {
-                validInput = true;
+            for (int i = 0; i < strlen(member[totalMember].noHp); i++) {
+                if (!isdigit(member[totalMember].noHp[i])) {
+                    printf(RED "Silahkan masukkan angka saja.\n" RESET);
+                    i = strlen(member[totalMember].noHp);
+                    validInput = false;
+                } else {
+                    validInput = true;
+                }
             }
         }
-        getchar(); 
 
         printf(CYAN "|---------------------------------------|\n" RESET);
         printf(CYAN "| %-37s |\n", "Alamat Member");
@@ -158,7 +162,7 @@ void getDataMember() {
         printf(CYAN "====================================================================================================================================\n" RESET);
 
         for (int i = 0; i < totalMember; i++) {
-            printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-15ld" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " |\n" RESET, 
+            printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " |\n" RESET, 
                    i + 1,
                    member[i].dataMember.namaLengkap,
                    member[i].noHp,
@@ -257,6 +261,7 @@ void seedUser(){
 
 void seedMember(){
     strcpy(member[0].dataMember.namaLengkap,"Ricko");
+    strcpy(member[0].noHp,"082116375827");
     strcpy(member[0].dataMember.alamatUser.namaJalan,"Jl.Jalan");
     strcpy(member[0].dataMember.alamatUser.kelurahan,"Mugarsari");
     strcpy(member[0].dataMember.alamatUser.kecamatan,"Tamansari");
