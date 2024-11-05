@@ -237,7 +237,13 @@ void pinjamkanBuku() {
                 if (buku[bookIndex].jumlah > 0) {
                     for (int i = 0; i < peminjam; i++) {
                         if (dataPinjam[i].memberIndex == memberIndex) {
+                            dataPinjam[i].bukuIndex[dataPinjam[i].totalPinjaman] = bookIndex;
+                            dataPinjam[i].totalPinjaman++;
+                            buku[bookIndex].jumlah--;
+                            bookNumber++;
                             isMemberFound = true;
+                            printf("Buku berhasil ditambahkan ke daftar pinjam\n");
+                            break;
                         }
                     }
 
@@ -307,8 +313,8 @@ void kembalikanBuku() {
     if (peminjam > 0) {
         int findIndexMember = findMember();
         for (int i = 0; i < peminjam; i++) {
-            if (findIndexMember - 1 == dataPinjam[i].memberIndex) {
-                printf("\nPeminjam %d. Nama : %s \n", i + 1, member[findIndexMember - 1].dataMember.namaLengkap);
+            if (findIndexMember == dataPinjam[i].memberIndex) {
+                printf("\nPeminjam %d. Nama : %s \n", i + 1, member[findIndexMember].dataMember.namaLengkap);
                 printf("Data buku dipinjam : \n");
                 for (int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
                     printf("Buku %d : %s \n", j + 1, buku[dataPinjam[i].bukuIndex[j]].judulBuku);
@@ -395,10 +401,16 @@ void hapusDataBuku(){
         getchar();
         printf("\n");
         if(isDelete == 'y'){
-            for(int i = bookIndex; i < sizeof(buku) / sizeof(buku[0]) - 1; i++){
-                buku[i] = buku[i + 1];
+
+            for (int i = 0; i < totalBuku; i++)
+            {
+                if(bookIndex == i - 1){
+                    for(int j = bookIndex - 1; j < totalBuku - 1 ; j++){
+                        buku[i - 1] = buku[j + 1];
+                    }
+                }
             }
-            totalBuku--;
+            totalBuku--;   
 
 
             printf(YELLOW "Data buku berhasil dihapus " RESET);
