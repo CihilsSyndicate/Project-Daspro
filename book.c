@@ -185,11 +185,11 @@ int findBook() {
 
         int found = 0;
 
-        printf(CYAN "================================================================================================\n" RESET);
-        printf(CYAN "||" RESET YELLOW "                                         HASIL PENCARIAN BUKU                                      " RESET CYAN "||\n" RESET);
-        printf(CYAN "================================================================================================\n" RESET);
+        printf(CYAN "==================================================================================================================\n" RESET);
+        printf(CYAN "||" RESET YELLOW "                                                   DAFTAR BUKU                                                " RESET CYAN "||\n" RESET);
+        printf(CYAN "==================================================================================================================\n" RESET);
         printf(CYAN "| %-5s | %-20s | %-25s | %-25s | %-15s | %-5s |\n" RESET, "No", "Judul Buku", "Pengarang", "Penerbit", "Genre", "Stok");
-        printf(CYAN "================================================================================================\n" RESET);
+        printf(CYAN "==================================================================================================================\n" RESET);
 
         for (int i = 0; i < totalBuku; i++) {
             char bookTitle[50];
@@ -197,19 +197,19 @@ int findBook() {
             toLowerCase(bookTitle);
 
             if (strstr(bookTitle, searchTitle) != NULL) {
-                printf(CYAN "| %-5d | %-20s | %-25s | %-25s | %-15s | %-5d |\n" RESET, 
-                       i + 1,
-                       buku[i].judulBuku,
-                       buku[i].pengarang,
-                       buku[i].penerbit,
-                       buku[i].genre,
-                       buku[i].jumlah);
+                printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-5d" CYAN " |\n" RESET,
+                    i + 1,
+                    buku[i].judulBuku,
+                    buku[i].pengarang,
+                    buku[i].penerbit,
+                    buku[i].genre,
+                    buku[i].jumlah);
                 found = 1;
                 return i;
             }
         }
 
-        printf(CYAN "================================================================================================\n\n" RESET);
+        printf(CYAN "==================================================================================================================\n" RESET);
 
         if (!found) {
             printf("Buku tidak ditemukan, coba periksa kembali!\n");
@@ -242,7 +242,7 @@ void pinjamkanBuku() {
                             buku[bookIndex].jumlah--;
                             bookNumber++;
                             isMemberFound = true;
-                            printf("Buku berhasil ditambahkan ke daftar pinjam\n");
+                            printf("\nBuku berhasil ditambahkan ke daftar pinjam\n\n");
                             break;
                         }
                     }
@@ -255,7 +255,7 @@ void pinjamkanBuku() {
                         buku[bookIndex].jumlah--;
                         bookNumber++;
                         peminjam++;
-                        printf("Buku berhasil ditambahkan ke daftar pinjam\n");
+                        printf("\nBuku berhasil ditambahkan ke daftar pinjam\n\n");
                     }
                 } else {
                     printf("Maaf, stok buku tidak tersedia\n");
@@ -276,36 +276,36 @@ void pinjamkanBuku() {
 }
 
 void daftarPeminjamAktif() {
-    printf("\n=== DAFTAR PEMINJAMAN  ===\n\n");    
-    
+    printf(CYAN "===========================================================================================================\n" RESET);
+    printf(CYAN "||" RESET YELLOW "                                           DAFTAR PEMINJAMAN AKTIF                                     " RESET CYAN "||\n" RESET);
+    printf(CYAN "===========================================================================================================\n" RESET);
+
     if (peminjam > 0) {
-        for(int i = 0; i < peminjam; i++) {
-            printf("Peminjam ke-%d:\n", i + 1);
-            printf("----------------------------------------\n");
-            printf("Nama Peminjam: %s\n", 
-                   member[dataPinjam[i].memberIndex].dataMember.namaLengkap);
-            printf("Alamat: %s, %s, %s\n",
-                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.namaJalan,
-                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.kelurahan,
-                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.kecamatan,
-                   member[dataPinjam[i].memberIndex].dataMember.alamatUser.kota);
-            
-            printf("\nBuku yang dipinjam:\n");
-            for(int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
-                printf("%d. %s (Pengarang: %s)\n",
-                       j + 1, 
+        printf(CYAN "| " RESET WHITE "%-5s" CYAN " | " RESET WHITE "%-25s" CYAN " | " RESET WHITE "%-25s" CYAN " | " RESET WHITE "%-20s" CYAN " | " RESET WHITE "%-12s" CYAN " |  \n" RESET,
+               "No", "Nama Peminjam", "Alamat", "Buku Dipinjam", "Tanggal Pinjam  ");
+        printf(CYAN "|---------------------------------------------------------------------------------------------------------|\n" RESET);
+
+        int no = 1;
+        for (int i = 0; i < peminjam; i++) {
+            for (int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
+                printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-12s" CYAN " |\n" RESET,
+                       no,
+                       member[dataPinjam[i].memberIndex].dataMember.namaLengkap,
+                       member[dataPinjam[i].memberIndex].dataMember.alamatUser.namaJalan,
                        buku[dataPinjam[i].bukuIndex[j]].judulBuku,
-                       buku[dataPinjam[i].bukuIndex[j]].pengarang);
-                    
+                       dataPinjam[i].tanggalPinjam);
+
+                no++;
             }
-            printf("Tanggal Pinjam : %s \n", dataPinjam[i].tanggalPinjam);
-            printf("----------------------------------------\n\n");
+            printf(CYAN "|---------------------------------------------------------------------------------------------------------|\n" RESET);
         }
-        printf("Total Peminjam Aktif: %d\n", peminjam);
+
+        printf(CYAN "|" RESET GREEN "Total Peminjam Aktif:" RESET "%-1d" CYAN "|\n" RESET, peminjam);
     } else {
-        printf("Tidak ada peminjaman saat ini\n");
+        printf(RED "Tidak ada peminjaman saat ini\n" RESET);
     }
-    printf("===============================================\n");
+
+    printf(CYAN "===========================================================================================================\n\n" RESET);
 }
 
 void kembalikanBuku() {

@@ -152,9 +152,9 @@ void getDataMember() {
     if (totalMember > 0) {
         
         printf(CYAN "====================================================================================================================================\n" RESET);
-        printf(CYAN "||" RESET YELLOW "                                            PERPUSTAKAAN HITAM                                            " RESET CYAN "||\n" RESET);
+        printf(CYAN "||" RESET YELLOW "                                                          PERPUSTAKAAN HITAM                                                    " RESET CYAN "||\n" RESET);
         printf(CYAN "====================================================================================================================================\n" RESET);
-        printf(CYAN "||" RESET YELLOW "                                               DAFTAR MEMBER                                              " RESET CYAN "||\n" RESET);
+        printf(CYAN "||" RESET YELLOW "                                                            DAFTAR MEMBER                                                       " RESET CYAN "||\n" RESET);
         printf(CYAN "====================================================================================================================================\n" RESET);
  
         printf(CYAN "| " RESET GREEN "%-5s" RESET CYAN " | " RESET GREEN "%-25s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-20s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " |\n" RESET,
@@ -198,10 +198,10 @@ int findMember() {
 
         int found = 0;
 
+         printf(CYAN "====================================================================================================================================\n" RESET);
+        printf(CYAN "||" RESET YELLOW "                                                          PERPUSTAKAAN HITAM                                                    " RESET CYAN "||\n" RESET);
         printf(CYAN "====================================================================================================================================\n" RESET);
-        printf(CYAN "||" RESET YELLOW "                                            PERPUSTAKAAN HITAM                                            " RESET CYAN "||\n" RESET);
-        printf(CYAN "====================================================================================================================================\n" RESET);
-        printf(CYAN "||" RESET YELLOW "                                             HASIL PENCARIAN                                              " RESET CYAN "||\n" RESET);
+        printf(CYAN "||" RESET YELLOW "                                                            HASIL PENCARIAN                                                     " RESET CYAN "||\n" RESET);
         printf(CYAN "====================================================================================================================================\n" RESET);
         printf(CYAN "| " RESET GREEN "%-5s" RESET CYAN " | " RESET GREEN "%-25s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-20s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " |\n" RESET,
                "No", "Nama Lengkap", "No HP", "Nama Jalan", "Kelurahan", "Kecamatan", "Kota");
