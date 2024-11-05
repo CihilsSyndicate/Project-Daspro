@@ -149,16 +149,22 @@ int login() {
 								tambahBuku();
 								break;
 							case 2:
-								tampilkanBuku();
+								editDataBuku();
 								break;
 							case 3:
-								pinjamkanBuku();
+								tampilkanBuku();
 								break;
 							case 4:
-								daftarPeminjamAktif();
+								pinjamkanBuku();
 								break;
 							case 5:
+								daftarPeminjamAktif();
+								break;
+							case 6:
 								kembalikanBuku();
+								break;
+							case 7:
+								hapusDataBuku();
 								break;
 							case 0:
 								exitSubMenu = 1;

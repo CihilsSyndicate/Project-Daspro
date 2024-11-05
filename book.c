@@ -128,10 +128,12 @@ void menuBuku() {
     printf(CYAN "=======================================\n" RESET);
     
     printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[1]" RESET, "Tambah Buku");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[2]" RESET, "Tampilkan Semua Buku");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[3]" RESET, "Pinjamkan Buku");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[4]" RESET, "Daftar Peminjam");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[5]" RESET, "Kembalikan Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[2]" RESET, "Edit Data Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[3]" RESET, "Tampilkan Semua Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[4]" RESET, "Pinjamkan Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[5]" RESET, "Daftar Peminjam");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[6]" RESET, "Kembalikan Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[7]" RESET, "Hapus Data Buku");
     printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", RED "[0]" RESET, "Keluar Ke Menu Utama");
     
     printf(CYAN "---------------------------------------\n\n" RESET);
@@ -168,8 +170,6 @@ int tampilkanBuku() {
         return 0;
     }
 }
-
-
 
 int findBook() {
     char searchTitle[50];
@@ -219,7 +219,6 @@ int findBook() {
     }
     // return 0;
 }
-
 
 void pinjamkanBuku() {
     int memberIndex = findMember();
@@ -348,4 +347,73 @@ void kembalikanBuku() {
     } else {
         printf("Tidak ada data peminjam\n");
     }
+}
+
+void editDataBuku(){
+    int bookIndex = findBook();
+
+    printf(CYAN "=========================================\n" RESET);
+    printf(CYAN "||" RESET GREEN "         FORM EDIT DATA BUKU        " RESET CYAN "||\n" RESET);
+    printf(CYAN "=========================================\n" RESET);
+
+    printf(CYAN "| %-37s |\n", "Masukkan data Buku");
+    printf(CYAN "|---------------------------------------|\n" RESET);
+
+    printf(CYAN "| %-28s: " RESET, "Masukan Judul");
+    fgets(buku[bookIndex].judulBuku, sizeof(buku[bookIndex].judulBuku), stdin);
+    buku[bookIndex].judulBuku[strcspn(buku[bookIndex].judulBuku, "\n")] = '\0';
+
+    printf(CYAN "| %-28s: " RESET, "Masukan Nama Penerbit");
+    fgets(buku[bookIndex].penerbit, sizeof(buku[bookIndex].penerbit), stdin);
+    buku[bookIndex].penerbit[strcspn(buku[bookIndex].penerbit, "\n")] = '\0';
+
+    printf(CYAN "| %-28s: " RESET, "Masukan Genre");
+    fgets(buku[bookIndex].genre, sizeof(buku[bookIndex].genre), stdin);
+    buku[bookIndex].genre[strcspn(buku[bookIndex].genre, "\n")] = '\0';
+
+    printf(CYAN "| %-28s: " RESET, "Masukan Nama Pengarang");
+    fgets(buku[bookIndex].pengarang, sizeof(buku[bookIndex].pengarang), stdin);
+    buku[bookIndex].pengarang[strcspn(buku[bookIndex].pengarang, "\n")] = '\0';
+
+    printf(CYAN "| %-28s: " RESET, "Masukan Jumlah Buku");
+    scanf("%d", &buku[bookIndex].jumlah);
+    getchar();
+
+    printf(CYAN "---------------------------------------\n\n" RESET);
+
+    printf(YELLOW "Data Buku berhasil diubah: " RESET);
+    printf("\n"); 
+
+}
+
+void hapusDataBuku(){
+    int bookIndex = findBook();
+    char isDelete;
+
+        printf(YELLOW "Apakah anda benar - benar ingin menghapus data buku ini ? [y / t]" RESET);
+        scanf("%c", &isDelete);
+        getchar();
+        printf("\n");
+        if(isDelete == 'y'){
+            for(int i = bookIndex; i < sizeof(buku) / sizeof(buku[0]) - 1; i++){
+                buku[i] = buku[i + 1];
+            }
+            totalBuku--;
+
+
+            printf(YELLOW "Data buku berhasil dihapus " RESET);
+            printf("\n");
+        }else{
+            printf(YELLOW "Data buku batal dihapus " RESET);
+            printf("\n");
+        }
+
+        // if (dataPinjam[i].totalPinjaman == 0) {
+
+        //     for (int k = i; k < peminjam - 1; k++) {
+        //         dataPinjam[k] = dataPinjam[k + 1];
+        //     }
+        //     peminjam--;
+        //     printf("Member sudah tidak memiliki pinjaman buku.\n");
+        // }
 }
