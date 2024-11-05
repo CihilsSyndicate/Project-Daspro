@@ -110,6 +110,12 @@ int login() {
 							case 3:
 								findMember();
 								break;
+							case 4:
+								editMember();
+								break;
+							case 5:
+								deleteMember();
+								break;
 							case 0:
 								exitSubMenu = 1;
 								break;
