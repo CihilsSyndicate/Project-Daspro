@@ -205,7 +205,7 @@ int findBook() {
                     buku[i].genre,
                     buku[i].jumlah);
                 found = 1;
-                return i;
+                return i+1;
             }
         }
 
@@ -223,7 +223,8 @@ int findBook() {
 void pinjamkanBuku() {
     int memberIndex = findMember();
     int bookIndex;
-    if (memberIndex >= 0) {
+    if (memberIndex > 0) {
+        memberIndex-=1;
         int bookNumber = 0;
         char finishPinjamChar;
         bool isFinishPinjam = false;
@@ -232,8 +233,8 @@ void pinjamkanBuku() {
 
         do {
             bookIndex = findBook();
-            if (bookIndex >= 0) {
-
+            if (bookIndex) {
+                bookIndex-=1;
                 if (buku[bookIndex].jumlah > 0) {
                     for (int i = 0; i < peminjam; i++) {
                         if (dataPinjam[i].memberIndex == memberIndex) {
@@ -260,19 +261,24 @@ void pinjamkanBuku() {
                 } else {
                     printf("Maaf, stok buku tidak tersedia\n");
                 }
+
+                printf("Tambahkan buku lain ? (y/t): ");
+                scanf(" %c", &finishPinjamChar);
+                getchar();
+
+                if (finishPinjamChar != 'y') {
+                    isFinishPinjam = true;
+                }
+            }else{
+                printf("Buku tidak ada \n");
             }
 
-            printf("Tambahkan buku lain ? (y/t): ");
-            scanf(" %c", &finishPinjamChar);
-            getchar();
-
-            if (finishPinjamChar != 'y') {
-                isFinishPinjam = true;
-            }
         } while (!isFinishPinjam && bookNumber < 10);
 
-    }
         printf("\nPeminjaman berhasil dicatat!\n");
+    }else{
+        printf("Peminjaman buku gagal ! \n");
+    }
 }
 
 void daftarPeminjamAktif() {
@@ -358,37 +364,42 @@ void kembalikanBuku() {
 void editDataBuku(){
     int bookIndex = findBook();
 
-    printf(CYAN "=========================================\n" RESET);
-    printf(CYAN "||" RESET GREEN "         FORM EDIT DATA BUKU        " RESET CYAN "||\n" RESET);
-    printf(CYAN "=========================================\n" RESET);
+    if(bookIndex-1 > -1){
+        printf(CYAN "=========================================\n" RESET);
+        printf(CYAN "||" RESET GREEN "         FORM EDIT DATA BUKU        " RESET CYAN "||\n" RESET);
+        printf(CYAN "=========================================\n" RESET);
 
-    printf(CYAN "| %-37s |\n", "Masukkan data Buku");
-    printf(CYAN "|---------------------------------------|\n" RESET);
+        printf(CYAN "| %-37s |\n", "Masukkan data Buku");
+        printf(CYAN "|---------------------------------------|\n" RESET);
 
-    printf(CYAN "| %-28s: " RESET, "Masukan Judul");
-    fgets(buku[bookIndex].judulBuku, sizeof(buku[bookIndex].judulBuku), stdin);
-    buku[bookIndex].judulBuku[strcspn(buku[bookIndex].judulBuku, "\n")] = '\0';
+        printf(CYAN "| %-28s: " RESET, "Masukan Judul");
+        fgets(buku[bookIndex].judulBuku, sizeof(buku[bookIndex].judulBuku), stdin);
+        buku[bookIndex].judulBuku[strcspn(buku[bookIndex].judulBuku, "\n")] = '\0';
 
-    printf(CYAN "| %-28s: " RESET, "Masukan Nama Penerbit");
-    fgets(buku[bookIndex].penerbit, sizeof(buku[bookIndex].penerbit), stdin);
-    buku[bookIndex].penerbit[strcspn(buku[bookIndex].penerbit, "\n")] = '\0';
+        printf(CYAN "| %-28s: " RESET, "Masukan Nama Penerbit");
+        fgets(buku[bookIndex].penerbit, sizeof(buku[bookIndex].penerbit), stdin);
+        buku[bookIndex].penerbit[strcspn(buku[bookIndex].penerbit, "\n")] = '\0';
 
-    printf(CYAN "| %-28s: " RESET, "Masukan Genre");
-    fgets(buku[bookIndex].genre, sizeof(buku[bookIndex].genre), stdin);
-    buku[bookIndex].genre[strcspn(buku[bookIndex].genre, "\n")] = '\0';
+        printf(CYAN "| %-28s: " RESET, "Masukan Genre");
+        fgets(buku[bookIndex].genre, sizeof(buku[bookIndex].genre), stdin);
+        buku[bookIndex].genre[strcspn(buku[bookIndex].genre, "\n")] = '\0';
 
-    printf(CYAN "| %-28s: " RESET, "Masukan Nama Pengarang");
-    fgets(buku[bookIndex].pengarang, sizeof(buku[bookIndex].pengarang), stdin);
-    buku[bookIndex].pengarang[strcspn(buku[bookIndex].pengarang, "\n")] = '\0';
+        printf(CYAN "| %-28s: " RESET, "Masukan Nama Pengarang");
+        fgets(buku[bookIndex].pengarang, sizeof(buku[bookIndex].pengarang), stdin);
+        buku[bookIndex].pengarang[strcspn(buku[bookIndex].pengarang, "\n")] = '\0';
 
-    printf(CYAN "| %-28s: " RESET, "Masukan Jumlah Buku");
-    scanf("%d", &buku[bookIndex].jumlah);
-    getchar();
+        printf(CYAN "| %-28s: " RESET, "Masukan Jumlah Buku");
+        scanf("%d", &buku[bookIndex].jumlah);
+        getchar();
 
-    printf(CYAN "---------------------------------------\n\n" RESET);
+        printf(CYAN "---------------------------------------\n\n" RESET);
 
-    printf(YELLOW "Data Buku berhasil diubah: " RESET);
-    printf("\n"); 
+        printf(YELLOW "Data Buku berhasil diubah: " RESET);
+        printf("\n"); 
+
+    }else{
+        printf("Buku tidak ada, kanjut \n");
+    }
 
 }
 

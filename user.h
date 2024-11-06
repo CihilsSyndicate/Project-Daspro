@@ -220,19 +220,23 @@ int findMember() {
             strcpy(memberName, member[i].dataMember.namaLengkap);
             toLowerCase(memberName);
 
-            if (strstr(memberName, searchName) != NULL) {
-                printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-15ld" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " |\n" RESET, 
-                       i + 1,
-                       member[i].dataMember.namaLengkap,
-                       member[i].noHp,
-                       member[i].dataMember.alamatUser.namaJalan,
-                       member[i].dataMember.alamatUser.kelurahan,
-                       member[i].dataMember.alamatUser.kecamatan,
-                       member[i].dataMember.alamatUser.kota);
-                found = 1;
+            if(strlen(searchName) > 0){
+                if (strstr(memberName, searchName) != NULL) {
+                    printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-15ld" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " |\n" RESET, 
+                        i + 1,
+                        member[i].dataMember.namaLengkap,
+                        member[i].noHp,
+                        member[i].dataMember.alamatUser.namaJalan,
+                        member[i].dataMember.alamatUser.kelurahan,
+                        member[i].dataMember.alamatUser.kecamatan,
+                        member[i].dataMember.alamatUser.kota);
+                    found = 1;
+                    return i+1; 
+                }
+            }else{
+                printf("Masukkan Nama Lengkap dengan Benar \n");
             }
         }
-
        printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
         
         if (!found) {
@@ -307,6 +311,7 @@ int editMember() {
                 printf("Masukkan pilihan: ");
 
                 int choice;
+                bool validInput = false;
                 scanf("%d", &choice);
                 getchar();
 
@@ -318,7 +323,6 @@ int editMember() {
                         capitalizeEachWord(member[index].dataMember.namaLengkap);
                         break;
                     case 2:
-                        bool validInput = false;
                         while (!validInput) {
                             printf("Masukkan nomor baru (tanpa spasi): ");
                             fgets(member[index].noHp, sizeof(member[index].noHp), stdin);
