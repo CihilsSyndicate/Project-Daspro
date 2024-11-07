@@ -495,6 +495,7 @@ void menuUser() {
     printf(CYAN "||" RESET GREEN "             MENU USER             " RESET CYAN "||\n" RESET);
     printf(CYAN "=======================================\n" RESET);
     printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[1]" RESET, "Ganti Password");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[2]" RESET, "Ganti Email");
     printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", RED "[0]" RESET, "Kembali ke Menu Utama");
     printf(CYAN "---------------------------------------\n\n" RESET);
 }
