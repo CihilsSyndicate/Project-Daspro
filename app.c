@@ -49,22 +49,22 @@ int login() {
 	int isExitNum = 0;
 	bool isExit = false;
 	int loginAttempt = 0;
-	do {
-		char email[50], password[50];
-		header();
+	// do {
+	// 	char email[50], password[50];
+	// 	header();
 
-		printf("Masukkan Email anda : ");
-		fgets(email, sizeof(email), stdin);
-		email[strlen(email) - 1] = '\0';
+	// 	printf("Masukkan Email anda : ");
+	// 	fgets(email, sizeof(email), stdin);
+	// 	email[strlen(email) - 1] = '\0';
 
-		printf("Masukkan Password anda : ");
-		fgets(password, sizeof(password), stdin);
-		password[strlen(password) - 1] = '\0';
+	// 	printf("Masukkan Password anda : ");
+	// 	fgets(password, sizeof(password), stdin);
+	// 	password[strlen(password) - 1] = '\0';
 
 
-		for(int i = 0; i < sizeof(admin) / sizeof(admin[0]); i++){
+		// for(int i = 0; i < sizeof(admin) / sizeof(admin[0]); i++){
 
-			if(strcmp(email, admin[i].email) == 0 && strcmp(password, admin[i].password) == 0) {
+			// if(strcmp(email, admin[i].email) == 0 && strcmp(password, admin[i].password) == 0) {
 				do {
 					int exitSubMenu = 0;         
 					clear();
@@ -152,24 +152,27 @@ int login() {
 
 							switch (subMenu) {
 							case 1:
-								tambahBuku();
+								findBook();
 								break;
 							case 2:
-								editDataBuku();
+								tambahBuku();
 								break;
 							case 3:
-								tampilkanBuku();
+								editDataBuku();
 								break;
 							case 4:
-								pinjamkanBuku();
+								tampilkanBuku();
 								break;
 							case 5:
-								daftarPeminjamAktif();
+								pinjamkanBuku();
 								break;
 							case 6:
-								kembalikanBuku();
+								daftarPeminjamAktif();
 								break;
 							case 7:
+								kembalikanBuku();
+								break;
+							case 8:
 								hapusDataBuku();
 								break;
 							case 0:
@@ -260,15 +263,15 @@ int login() {
 
 				} while(!isExit);
 
-				break;
-			} else {
-				clear();
-				printf("Data yang anda masukkan salah, coba lagi \n");
-				loginAttempt++;
-			}
+		// 		break;
+		// 	} else {
+		// 		clear();
+		// 		printf("Data yang anda masukkan salah, coba lagi \n");
+		// 		loginAttempt++;
+		// 	}
 				
-		}
-	} while(loginAttempt < 3);
+		// }
+	// } while(loginAttempt < 3);
 
 	if (loginAttempt >= 3) {
 		printf("Akun anda telah diblokir \n");

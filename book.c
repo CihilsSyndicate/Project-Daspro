@@ -123,22 +123,23 @@ void tambahBuku() {
         }
     }
 }
+
 void menuBuku() {
     printf(CYAN "||" RESET GREEN "             MENU BUKU             " RESET CYAN "||\n" RESET);
     printf(CYAN "=======================================\n" RESET);
     
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[1]" RESET, "Tambah Buku");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[2]" RESET, "Edit Data Buku");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[3]" RESET, "Tampilkan Semua Buku");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[4]" RESET, "Pinjamkan Buku");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[5]" RESET, "Daftar Peminjam");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[6]" RESET, "Kembalikan Buku");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[7]" RESET, "Hapus Data Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[1]" RESET, "Cari Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[2]" RESET, "Tambah Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[3]" RESET, "Edit Data Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[4]" RESET, "Tampilkan Semua Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[5]" RESET, "Pinjamkan Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[6]" RESET, "Daftar Peminjam");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[7]" RESET, "Kembalikan Buku");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[8]" RESET, "Hapus Data Buku");
     printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", RED "[0]" RESET, "Keluar Ke Menu Utama");
     
     printf(CYAN "---------------------------------------\n\n" RESET);
 }
-
 
 int tampilkanBuku() {
     printf(CYAN "==================================================================================================================\n" RESET);
@@ -210,13 +211,13 @@ int findBook() {
         }
 
         printf(CYAN "==================================================================================================================\n" RESET);
-
         if (!found) {
             printf("Buku tidak ditemukan, coba periksa kembali!\n");
         }
     } else {
         printf("Tidak ada data buku.\n");
     }
+
     // return 0;
 }
 
