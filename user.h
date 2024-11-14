@@ -74,8 +74,14 @@ int getIndexByName(const char *name) {
 
 void addMember() {
     bool isFinishAddUser = false;
-    char conf;
-
+    char editLagi;
+    char namaLengkap[50];
+    char noHp[15];
+    char namaJalan[100];
+    char kelurahan[40];
+    char kecamatan[40];
+    char kota[40];
+    
     srand(time(NULL));
 
     do {
@@ -87,74 +93,81 @@ void addMember() {
         printf(CYAN "|---------------------------------------|\n" RESET);
 
         printf(CYAN "| %-28s: " RESET, "Masukkan nama Member");
-        fgets(member[totalMember].dataMember.namaLengkap, sizeof(member[totalMember].dataMember.namaLengkap), stdin);
-        member[totalMember].dataMember.namaLengkap[strcspn(member[totalMember].dataMember.namaLengkap, "\n")] = '\0';
+        fgets(namaLengkap, sizeof(namaLengkap), stdin);
+        namaLengkap[strcspn(namaLengkap, "\n")] = '\0';
 
-        capitalizeEachWord(member[totalMember].dataMember.namaLengkap);
+        capitalizeEachWord(namaLengkap);
 
-        if (isDuplicateName(member[totalMember].dataMember.namaLengkap)) {
+        if (isDuplicateName(namaLengkap)) {
             printf(RED "Nama member tersebut sudah ada!\n" RESET);
             continue; 
         }
 
-        bool validInput = false;
-        while (!validInput) {
+        bool validNoHpInput = false;
+        do {
             printf(CYAN "| %-28s: " RESET, "Masukkan nomor Member (tanpa spasi)");
-            fgets(member[totalMember].noHp, sizeof(member[totalMember].noHp), stdin);
-            member[totalMember].noHp[strcspn(member[totalMember].noHp, "\n")] = '\0';
+            fgets(noHp, sizeof(noHp), stdin);
+            noHp[strcspn(noHp, "\n")] = '\0';
 
-            for (int i = 0; i < strlen(member[totalMember].noHp); i++) {
-                if (!isdigit(member[totalMember].noHp[i])) {
+            validNoHpInput = true;
+            for (int i = 0; i < strlen(noHp); i++) {
+                if (!isdigit(noHp[i])) {
                     printf(RED "Silahkan masukkan angka saja.\n" RESET);
-                    i = strlen(member[totalMember].noHp);
-                    validInput = false;
-                } else {
-                    validInput = true;
+                    validNoHpInput = false;
+                    break;
                 }
             }
-        }
+        } while(!validNoHpInput);
 
         printf(CYAN "|---------------------------------------|\n" RESET);
         printf(CYAN "| %-37s |\n", "Alamat Member");
         printf(CYAN "|---------------------------------------|\n" RESET);
 
         printf(CYAN "| %-28s: " RESET, "Nama Jalan");
-        fgets(member[totalMember].dataMember.alamatUser.namaJalan, sizeof(member[totalMember].dataMember.alamatUser.namaJalan), stdin);
-        member[totalMember].dataMember.alamatUser.namaJalan[strcspn(member[totalMember].dataMember.alamatUser.namaJalan, "\n")] = '\0';
-        capitalizeEachWord(member[totalMember].dataMember.alamatUser.namaJalan);
+        fgets(namaJalan, sizeof(namaJalan), stdin);
+        namaJalan[strcspn(namaJalan, "\n")] = '\0';
+        capitalizeEachWord(namaJalan);
 
         printf(CYAN "| %-28s: " RESET, "Nama Kelurahan");
-        fgets(member[totalMember].dataMember.alamatUser.kelurahan, sizeof(member[totalMember].dataMember.alamatUser.kelurahan), stdin);
-        member[totalMember].dataMember.alamatUser.kelurahan[strcspn(member[totalMember].dataMember.alamatUser.kelurahan, "\n")] = '\0';
-        capitalizeEachWord(member[totalMember].dataMember.alamatUser.kelurahan);
+        fgets(kelurahan, sizeof(kelurahan), stdin);
+        kelurahan[strcspn(kelurahan, "\n")] = '\0';
+        capitalizeEachWord(kelurahan);
 
         printf(CYAN "| %-28s: " RESET, "Nama Kecamatan");
-        fgets(member[totalMember].dataMember.alamatUser.kecamatan, sizeof(member[totalMember].dataMember.alamatUser.kecamatan), stdin);
-        member[totalMember].dataMember.alamatUser.kecamatan[strcspn(member[totalMember].dataMember.alamatUser.kecamatan, "\n")] = '\0';
-        capitalizeEachWord(member[totalMember].dataMember.alamatUser.kecamatan);
+        fgets(kecamatan, sizeof(kecamatan), stdin);
+        kecamatan[strcspn(kecamatan, "\n")] = '\0';
+        capitalizeEachWord(kecamatan);
 
         printf(CYAN "| %-28s: " RESET, "Nama Kota");
-        fgets(member[totalMember].dataMember.alamatUser.kota, sizeof(member[totalMember].dataMember.alamatUser.kota), stdin);
-        member[totalMember].dataMember.alamatUser.kota[strcspn(member[totalMember].dataMember.alamatUser.kota, "\n")] = '\0';
-        capitalizeEachWord(member[totalMember].dataMember.alamatUser.kota);
+        fgets(kota, sizeof(kota), stdin);
+        kota[strcspn(kota, "\n")] = '\0';
+        capitalizeEachWord(kota);
+
+        // Copy input data ke struct Member
+        strcpy(member[totalMember].dataMember.namaLengkap, namaLengkap);
+        strcpy(member[totalMember].noHp, noHp);
+        strcpy(member[totalMember].dataMember.alamatUser.namaJalan, namaJalan);
+        strcpy(member[totalMember].dataMember.alamatUser.kelurahan, kelurahan);
+        strcpy(member[totalMember].dataMember.alamatUser.kecamatan, kecamatan);
+        strcpy(member[totalMember].dataMember.alamatUser.kota, kota);
 
         printf(CYAN "---------------------------------------\n\n" RESET);
 
+        totalMember++;
+
         printf("Apakah anda akan menambah data Member lagi? [y / t] : ");
-        scanf("%c", &conf);
+        scanf("%c", &editLagi);
         getchar();
 
-        if (conf == 't') {
+        if (editLagi == 't') {
             printf(RED "Anda keluar dari menu tambah member!\n" RESET);
             isFinishAddUser = true;
         }
-
-        totalMember++;
+        
         printf("\n");
 
     } while (!isFinishAddUser);
 }
-
 
 void getDataMember() {
     if (totalMember > 0) {
@@ -186,7 +199,6 @@ void getDataMember() {
     }
 }
 
-
 void toLowerCase(char *str) {
     for (int i = 0; str[i]; i++) {
         str[i] = tolower((unsigned char)str[i]);
@@ -206,7 +218,7 @@ int findMember() {
 
         int found = 0;
 
-         printf(CYAN "====================================================================================================================================\n" RESET);
+        printf(CYAN "====================================================================================================================================\n" RESET);
         printf(CYAN "||" RESET YELLOW "                                                          PERPUSTAKAAN HITAM                                                    " RESET CYAN "||\n" RESET);
         printf(CYAN "====================================================================================================================================\n" RESET);
         printf(CYAN "||" RESET YELLOW "                                                            HASIL PENCARIAN                                                     " RESET CYAN "||\n" RESET);
@@ -237,7 +249,7 @@ int findMember() {
                 printf("Masukkan Nama Lengkap dengan Benar \n");
             }
         }
-       printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
+        printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
         
         if (!found) {
             printf("Member tidak ditemukan, coba periksa kembali!\n");
@@ -262,6 +274,7 @@ int editMember() {
         int index = getIndexByName(searchName);
 
         int found = 0;
+
 
         printf(CYAN "====================================================================================================================================\n" RESET);
         printf(CYAN "||" RESET YELLOW "                                            PERPUSTAKAAN HITAM                                            " RESET CYAN "||\n" RESET);
@@ -290,92 +303,103 @@ int editMember() {
             }
         }
 
-       printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
+        printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
 
         if (!found) {
             printf("Member tidak ditemukan, coba periksa kembali!\n");
-            return 0;
-        }
+            // return 0;
+        } else {
+            bool doneEditing = false;
+            if (index != -1) {
+                while (!doneEditing) {
+                    printf("Silakan pilih data yang ingin diubah:\n");
+                    printf("[1] Nama Lengkap\n");
+                    printf("[2] Nomor HP\n");
+                    printf("[3] Jalan\n");
+                    printf("[4] Kelurahan\n");
+                    printf("[5] Kecamatan\n");
+                    printf("[6] Kota\n");
+                    printf("[0] Selesai\n");
+                    printf("Masukkan pilihan: ");
 
-        bool doneEditing = false;
-        if (index != -1) {
-            while (!doneEditing) {
-                printf("Silakan pilih data yang ingin diubah:\n");
-                printf("[1] Nama Lengkap\n");
-                printf("[2] Nomor HP\n");
-                printf("[3] Jalan\n");
-                printf("[4] Kelurahan\n");
-                printf("[5] Kecamatan\n");
-                printf("[6] Kota\n");
-                printf("[0] Selesai\n");
-                printf("Masukkan pilihan: ");
+                    int choice;
+                    scanf("%d", &choice);
+                    getchar();
 
-                int choice;
-                bool validInput = false;
-                scanf("%d", &choice);
-                getchar();
+                    char namaLengkap[50];
+                    char noHp[15];
+                    char namaJalan[100];
+                    char kota[40];
+                    char kelurahan[40];
+                    char kecamatan[40];
 
-                switch (choice) {
-                    case 1:
-                        printf("Masukkan Nama Lengkap baru: ");
-                        fgets(member[index].dataMember.namaLengkap, sizeof(member[index].dataMember.namaLengkap), stdin);
-                        member[index].dataMember.namaLengkap[strcspn(member[index].dataMember.namaLengkap, "\n")] = '\0';
-                        capitalizeEachWord(member[index].dataMember.namaLengkap);
-                        break;
-                    case 2:
-                        while (!validInput) {
-                            printf("Masukkan nomor baru (tanpa spasi): ");
-                            fgets(member[index].noHp, sizeof(member[index].noHp), stdin);
-                            member[index].noHp[strcspn(member[index].noHp, "\n")] = '\0';
+                    switch (choice) {
+                        case 1:
+                            printf("Masukkan Nama Lengkap baru: ");
+                            fgets(namaLengkap, sizeof(namaLengkap), stdin);
+                            namaLengkap[strcspn(namaLengkap, "\n")] = '\0';
+                            capitalizeEachWord(namaLengkap);
+                            strcpy(member[index].dataMember.namaLengkap, namaLengkap);
+                            break;
+                        case 2:
+                            bool validInput = false;
+                            while (!validInput) {
+                                printf("Masukkan nomor baru (tanpa spasi): ");
+                                fgets(noHp, sizeof(noHp), stdin);
+                                noHp[strcspn(noHp, "\n")] = '\0';
 
-                            for (int i = 0; i < strlen(member[index].noHp); i++) {
-                                if (!isdigit(member[index].noHp[i])) {
-                                    printf(RED "Silahkan masukkan angka saja.\n" RESET);
-                                    i = strlen(member[index].noHp);
-                                    validInput = false;
-                                } else {
-                                    validInput = true;
+                                validInput = true;
+                                for (int i = 0; i < strlen(noHp); i++) {
+                                    if (!isdigit(noHp[i])) {
+                                        printf(RED "Silahkan masukkan angka saja.\n" RESET);
+                                        validInput = false;
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                        break;
-                    case 3:
-                        printf("Masukkan Nama Jalan baru: ");
-                        fgets(member[index].dataMember.alamatUser.namaJalan, sizeof(member[index].dataMember.alamatUser.namaJalan), stdin);
-                        member[index].dataMember.alamatUser.namaJalan[strcspn(member[index].dataMember.alamatUser.namaJalan, "\n")] = '\0';
-                        capitalizeEachWord(member[index].dataMember.alamatUser.namaJalan);
-                        break;
-                    case 4:
-                        printf("Masukkan Kelurahan baru: ");
-                        fgets(member[index].dataMember.alamatUser.kelurahan, sizeof(member[index].dataMember.alamatUser.kelurahan), stdin);
-                        member[index].dataMember.alamatUser.kelurahan[strcspn(member[index].dataMember.alamatUser.kelurahan, "\n")] = '\0';
-                        capitalizeEachWord(member[index].dataMember.alamatUser.kelurahan);
-                        break;
-                    case 5:
-                        printf("Masukkan Kecamatan baru: ");
-                        fgets(member[index].dataMember.alamatUser.kecamatan, sizeof(member[index].dataMember.alamatUser.kecamatan), stdin);
-                        member[index].dataMember.alamatUser.kecamatan[strcspn(member[index].dataMember.alamatUser.kecamatan, "\n")] = '\0';
-                        capitalizeEachWord(member[index].dataMember.alamatUser.kecamatan);
-                        break;
-                    case 6:
-                        printf("Masukkan Kota baru: ");
-                        fgets(member[index].dataMember.alamatUser.kota, sizeof(member[index].dataMember.alamatUser.kota), stdin);
-                        member[index].dataMember.alamatUser.kota[strcspn(member[index].dataMember.alamatUser.kota, "\n")] = '\0';
-                        capitalizeEachWord(member[index].dataMember.alamatUser.kota);
-                        break;
-                    case 0:
-                        printf("Pengeditan selesai.\n");
-                        doneEditing = true;
-                        break;
-                    default:
-                        printf("Pilihan tidak valid.\n");
-                        break;
+                            strcpy(member[index].noHp, noHp);
+                            break;
+                        case 3:
+                            printf("Masukkan Nama Jalan baru: ");
+                            fgets(namaJalan, sizeof(namaJalan), stdin);
+                            namaJalan[strcspn(namaJalan, "\n")] = '\0';
+                            capitalizeEachWord(namaJalan);
+                            strcpy(member[index].dataMember.alamatUser.namaJalan, namaJalan);
+                            break;
+                        case 4:
+                            printf("Masukkan Kelurahan baru: ");
+                            fgets(kelurahan, sizeof(kelurahan), stdin);
+                            kelurahan[strcspn(kelurahan, "\n")] = '\0';
+                            capitalizeEachWord(kelurahan);
+                            strcpy(member[index].dataMember.alamatUser.kelurahan, kelurahan);
+                            break;
+                        case 5:
+                            printf("Masukkan Kecamatan baru: ");
+                            fgets(kecamatan, sizeof(kecamatan), stdin);
+                            kecamatan[strcspn(kecamatan, "\n")] = '\0';
+                            capitalizeEachWord(kecamatan);
+                            strcpy(member[index].dataMember.alamatUser.kecamatan, kecamatan);
+                            break;
+                        case 6:
+                            printf("Masukkan Kota baru: ");
+                            fgets(kota, sizeof(kota), stdin);
+                            kota[strcspn(kota, "\n")] = '\0';
+                            capitalizeEachWord(kota);
+                            strcpy(member[index].dataMember.alamatUser.kota, kota);
+                            break;
+                        case 0:
+                            printf("Pengeditan selesai.\n");
+                            doneEditing = true;
+                            break;
+                        default:
+                            printf("Pilihan tidak valid.\n");
+                            break;
+                    }
                 }
+            } else {
+                printf("Member tidak ditemukan, coba periksa kembali!\n");
             }
-        } else {
-            printf("Member tidak ditemukan, coba periksa kembali!\n");
         }
-
     } else {
         printf("Tidak ada data member.\n");
     }
