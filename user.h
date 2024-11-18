@@ -84,7 +84,7 @@ void addMember() {
     
     srand(time(NULL));
 
-    do {
+    while (!isFinishAddUser){
         printf(CYAN "=========================================\n" RESET);
         printf(CYAN "||" RESET GREEN "       FORM INPUT DATA MEMBER        " RESET CYAN "||\n" RESET);
         printf(CYAN "=========================================\n" RESET);
@@ -104,7 +104,7 @@ void addMember() {
         }
 
         bool validNoHpInput = false;
-        do {
+        while(!validNoHpInput) {
             printf(CYAN "| %-28s: " RESET, "Masukkan nomor Member (tanpa spasi)");
             fgets(noHp, sizeof(noHp), stdin);
             noHp[strcspn(noHp, "\n")] = '\0';
@@ -117,7 +117,7 @@ void addMember() {
                     break;
                 }
             }
-        } while(!validNoHpInput);
+        };
 
         printf(CYAN "|---------------------------------------|\n" RESET);
         printf(CYAN "| %-37s |\n", "Alamat Member");
@@ -162,11 +162,13 @@ void addMember() {
         if (editLagi == 't') {
             printf(RED "Anda keluar dari menu tambah member!\n" RESET);
             isFinishAddUser = true;
+        } else {
+            printf(RED "Input tidak valid. Anda telah keluar dari menu.\n" RESET);
         }
         
         printf("\n");
 
-    } while (!isFinishAddUser);
+    };
 }
 
 void getDataMember() {
@@ -453,28 +455,27 @@ int deleteMember() {
         if (!found) {
             printf("Member tidak ditemukan, coba periksa kembali!\n");
             return 0;
-        }
-
-        char conf;
-        if (index != -1) {
-            printf("Apakah anda yakin ingin menghapus member ini? [y / t] : ");
-            scanf("%c", &conf);
-            if (conf == 'y'){
-                int length = sizeof(member) / sizeof(member[0]);
-                for (int i = index; i < length - 1; i++) {
-                    member[i] = member[i + 1];
-                }
-                length--;
-                totalMember--;
-            } else if(conf == 't') {
-                printf("Anda keluar dari menu.");
-            } else {
-                printf("Input tidak valid. Keluar dari menu.");
-            }
         } else {
-            printf("Member tidak ditemukan, coba periksa kembali!\n");
+            char conf;
+            if (index != -1) {
+                printf("Apakah anda yakin ingin menghapus member ini? [y / t] : ");
+                scanf("%c", &conf);
+                if (conf == 'y'){
+                    int length = sizeof(member) / sizeof(member[0]);
+                    for (int i = index; i < length - 1; i++) {
+                        member[i] = member[i + 1];
+                    }
+                    length--;
+                    totalMember--;
+                } else if(conf == 't') {
+                    printf("Anda keluar dari menu.");
+                } else {
+                    printf("Input tidak valid. Keluar dari menu.");
+                }
+            } else {
+                printf("Member tidak ditemukan, coba periksa kembali!\n");
+            }
         }
-
     } else {
         printf("Tidak ada data member.\n");
     }
