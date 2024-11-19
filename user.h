@@ -264,55 +264,57 @@ int findMember() {
 
 int editMember() {
     char searchName[50];
-    getDataMember();
+    // getDataMember();
 
     if (totalMember > 0) {
-        printf("Cari data Member berdasarkan Nama: ");
-        fgets(searchName, sizeof(searchName), stdin);
-        searchName[strcspn(searchName, "\n")] = 0; 
+        int memberIndex = findMember();
+        // printf("Cari data Member berdasarkan Nama: ");
+        // fgets(searchName, sizeof(searchName), stdin);
+        // searchName[strcspn(searchName, "\n")] = 0; 
 
-        toLowerCase(searchName);
+        // toLowerCase(searchName);
 
-        int index = getIndexByName(searchName);
+        // int index = getIndexByName(searchName);
 
-        int found = 0;
+        // int found = 0;
 
 
-        printf(CYAN "====================================================================================================================================\n" RESET);
-        printf(CYAN "||" RESET YELLOW "                                            PERPUSTAKAAN HITAM                                            " RESET CYAN "||\n" RESET);
-        printf(CYAN "====================================================================================================================================\n" RESET);
-        printf(CYAN "||" RESET YELLOW "                                             HASIL PENCARIAN                                              " RESET CYAN "||\n" RESET);
-        printf(CYAN "====================================================================================================================================\n" RESET);
-        printf(CYAN "| " RESET GREEN "%-5s" RESET CYAN " | " RESET GREEN "%-25s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-20s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " |\n" RESET,
-               "No", "Nama Lengkap", "No HP", "Nama Jalan", "Kelurahan", "Kecamatan", "Kota");
-        printf(CYAN "====================================================================================================================================\n" RESET);
+        // printf(CYAN "====================================================================================================================================\n" RESET);
+        // printf(CYAN "||" RESET YELLOW "                                            PERPUSTAKAAN HITAM                                            " RESET CYAN "||\n" RESET);
+        // printf(CYAN "====================================================================================================================================\n" RESET);
+        // printf(CYAN "||" RESET YELLOW "                                             HASIL PENCARIAN                                              " RESET CYAN "||\n" RESET);
+        // printf(CYAN "====================================================================================================================================\n" RESET);
+        // printf(CYAN "| " RESET GREEN "%-5s" RESET CYAN " | " RESET GREEN "%-25s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-20s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " |\n" RESET,
+        //        "No", "Nama Lengkap", "No HP", "Nama Jalan", "Kelurahan", "Kecamatan", "Kota");
+        // printf(CYAN "====================================================================================================================================\n" RESET);
 
-        for (int i = 0; i < totalMember; i++) {
-            char memberName[50];
-            strcpy(memberName, member[i].dataMember.namaLengkap);
-            toLowerCase(memberName);
+        // for (int i = 0; i < totalMember; i++) {
+        //     char memberName[50];
+        //     strcpy(memberName, member[i].dataMember.namaLengkap);
+        //     toLowerCase(memberName);
 
-            if (strstr(memberName, searchName) != NULL) {
-                printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " |\n" RESET, 
-                       i + 1,
-                       member[i].dataMember.namaLengkap,
-                       member[i].noHp,
-                       member[i].dataMember.alamatUser.namaJalan,
-                       member[i].dataMember.alamatUser.kelurahan,
-                       member[i].dataMember.alamatUser.kecamatan,
-                       member[i].dataMember.alamatUser.kota);
-                found = 1;
-            }
-        }
+        //     if (strstr(memberName, searchName) != NULL) {
+        //         printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " |\n" RESET, 
+        //                i + 1,
+        //                member[i].dataMember.namaLengkap,
+        //                member[i].noHp,
+        //                member[i].dataMember.alamatUser.namaJalan,
+        //                member[i].dataMember.alamatUser.kelurahan,
+        //                member[i].dataMember.alamatUser.kecamatan,
+        //                member[i].dataMember.alamatUser.kota);
+        //         found = 1;
+        //     }
+        // }
 
         printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
 
-        if (!found) {
+        if (memberIndex-1 < 0) {
             printf("Member tidak ditemukan, coba periksa kembali!\n");
             // return 0;
         } else {
             bool doneEditing = false;
-            if (index != -1) {
+            int index = memberIndex-1;
+            // if (index != -1) {
                 while (!doneEditing) {
                     printf("Silakan pilih data yang ingin diubah:\n");
                     printf("[1] Nama Lengkap\n");
@@ -398,9 +400,9 @@ int editMember() {
                             break;
                     }
                 }
-            } else {
-                printf("Member tidak ditemukan, coba periksa kembali!\n");
-            }
+            // } else {
+            //     printf("Member tidak ditemukan, coba periksa kembali!\n");
+            // }
         }
     } else {
         printf("Tidak ada data member.\n");

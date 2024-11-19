@@ -81,7 +81,7 @@ void tambahBuku() {
     char isFinish = 'y';
 
     while (isFinish == 'y' && totalBuku <= 3) {
-        if (totalBuku >= 3) {
+        if (totalBuku >= 100) {
             printf(RED "Jumlah buku sudah mencapai batas!!\n" RESET);
             break;
         } else {
