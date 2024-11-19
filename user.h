@@ -236,7 +236,7 @@ int findMember() {
 
             if(strlen(searchName) > 0){
                 if (strstr(memberName, searchName) != NULL) {
-                    printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-15ld" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " |\n" RESET, 
+                    printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " |\n" RESET, 
                         i + 1,
                         member[i].dataMember.namaLengkap,
                         member[i].noHp,
