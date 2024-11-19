@@ -399,7 +399,7 @@ void editDataBuku(){
         printf("\n"); 
 
     }else{
-        printf("Buku tidak ada, kanjut \n");
+        printf("Buku tidak ada.\n");
     }
 
 }
