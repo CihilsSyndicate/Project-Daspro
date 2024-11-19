@@ -335,6 +335,7 @@ int editMember() {
                     char kelurahan[40];
                     char kecamatan[40];
 
+                    bool validInput = false;
                     switch (choice) {
                         case 1:
                             printf("Masukkan Nama Lengkap baru: ");
@@ -344,7 +345,6 @@ int editMember() {
                             strcpy(member[index].dataMember.namaLengkap, namaLengkap);
                             break;
                         case 2:
-                            bool validInput = false;
                             while (!validInput) {
                                 printf("Masukkan nomor baru (tanpa spasi): ");
                                 fgets(noHp, sizeof(noHp), stdin);
