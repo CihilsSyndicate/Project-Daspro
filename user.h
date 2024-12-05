@@ -542,12 +542,12 @@ bool changeEmail(){
     char newEmail[50], passwordVerify[50];
     bool isPasswordMatch = false;
 
-    printf("\n Silakan Masukkan password baru : ");
+    printf("\n Silakan Masukkan Email baru : ");
     fgets(newEmail, sizeof(newEmail), stdin);
     newEmail[strlen(newEmail) - 1] = '\0';
 
     do{
-        printf("\n Silakan Masukkan password : ");
+        printf("\n Silakan Masukkan password untuk Verfikasi: ");
         fgets(passwordVerify, sizeof(passwordVerify), stdin);
         passwordVerify[strlen(passwordVerify) - 1] = '\0';
     
