@@ -19,6 +19,7 @@ struct PinjamBuku{
     int bukuIndex[10];
     int totalPinjaman;
     char* tanggalPinjam;
+    char* tanggalKembali;  // New field
 };
 
 struct Book buku[100];
@@ -59,6 +60,36 @@ char* getCurrentDate() {
     // printf("%s\n", currentDate);
     return currentDate;
     // return 0;
+}
+
+char* getDueDate(char* borrowDate) {
+    time_t currentTime;
+    struct tm loanDate = {0};
+    char day[3], year[5], monthStr[20];
+    
+    sscanf(borrowDate, "%s %s %s", day, monthStr, year);
+    
+    loanDate.tm_mday = atoi(day);
+    loanDate.tm_year = atoi(year) - 1900;
+    
+    // Convert month name to number
+    const char *months[] = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+                           "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+    for(int i = 0; i < 12; i++) {
+        if(strcmp(monthStr, months[i]) == 0) {
+            loanDate.tm_mon = i;
+            break;
+        }
+    }
+
+    currentTime = mktime(&loanDate);
+    currentTime += (7 * 24 * 60 * 60); // Add 7 days
+    
+    struct tm* dueDate = localtime(&currentTime);
+    char* dueDateStr = (char*) malloc(30 * sizeof(char));
+    sprintf(dueDateStr, "%02d %s %d", dueDate->tm_mday, months[dueDate->tm_mon], dueDate->tm_year + 1900);
+    
+    return dueDateStr;
 }
 
 void bukuSementara(){
@@ -238,28 +269,26 @@ void pinjamkanBuku() {
                     bool isMemberFound = false;
                     bool alreadyBorrowed = false;
 
-                    // Check if member already has active borrowings
                     for (int i = 0; i < peminjam; i++) {
                         if (dataPinjam[i].memberIndex == memberIndex) {
                             isMemberFound = true;
                             
-                            // Check if member already borrowed this book
                             for (int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
                                 if (dataPinjam[i].bukuIndex[j] == bookIndex) {
                                     alreadyBorrowed = true;
                                     if (strcmp(member[memberIndex].level, "Anggota") == 0) {
-                                        printf("Maaf, Anggota tidak dapat meminjam buku yang sama lebih dari sekali\n");
+                                        printf("Maaf, Anggota tidak dapat meminjam buku yang sama disaat bersamaan!\n");
                                         break;
                                     }
                                 }
                             }
 
-                            // If not already borrowed or is a Member (who can borrow duplicates)
                             if (!alreadyBorrowed || strcmp(member[memberIndex].level, "Member") == 0) {
                                 if (dataPinjam[i].totalPinjaman < 10) {
                                     dataPinjam[i].bukuIndex[dataPinjam[i].totalPinjaman] = bookIndex;
                                     dataPinjam[i].totalPinjaman++;
                                     dataPinjam[i].tanggalPinjam = getCurrentDate();
+                                    dataPinjam[i].tanggalKembali = getDueDate(dataPinjam[i].tanggalPinjam);
                                     buku[bookIndex].jumlah--;
                                     bookNumber++;
                                     printf("\nBuku berhasil ditambahkan ke daftar pinjam\n\n");
@@ -277,6 +306,7 @@ void pinjamkanBuku() {
                         dataPinjam[peminjam].bukuIndex[0] = bookIndex;
                         dataPinjam[peminjam].totalPinjaman = 1;
                         dataPinjam[peminjam].tanggalPinjam = getCurrentDate();
+                        dataPinjam[peminjam].tanggalKembali = getDueDate(dataPinjam[peminjam].tanggalPinjam);
                         buku[bookIndex].jumlah--;
                         bookNumber++;
                         peminjam++;
@@ -306,36 +336,36 @@ void pinjamkanBuku() {
 }
 
 void daftarPeminjamAktif() {
-    printf(CYAN "===========================================================================================================\n" RESET);
-    printf(CYAN "||" RESET YELLOW "                                           DAFTAR PEMINJAMAN AKTIF                                     " RESET CYAN "||\n" RESET);
-    printf(CYAN "===========================================================================================================\n" RESET);
+    printf(CYAN "===========================================================================================================================\n" RESET);
+    printf(CYAN "||" RESET YELLOW "                                              DAFTAR PEMINJAMAN AKTIF                                             " RESET CYAN "||\n" RESET);
+    printf(CYAN "===========================================================================================================================\n" RESET);
 
     if (peminjam > 0) {
-        printf(CYAN "| " RESET WHITE "%-5s" CYAN " | " RESET WHITE "%-25s" CYAN " | " RESET WHITE "%-25s" CYAN " | " RESET WHITE "%-20s" CYAN " | " RESET WHITE "%-12s" CYAN " |  \n" RESET,
-               "No", "Nama Peminjam", "Alamat", "Buku Dipinjam", "Tanggal Pinjam  ");
-        printf(CYAN "|---------------------------------------------------------------------------------------------------------|\n" RESET);
+        printf(CYAN "| %-4s | %-20s | %-20s | %-20s | %-15s | %-15s |\n" RESET,
+               "No", "Nama Peminjam", "Alamat", "Buku Dipinjam", "Tanggal Pinjam", "Batas Kembali");
+        printf(CYAN "---------------------------------------------------------------------------------------------------------------------------\n" RESET);
 
         int no = 1;
         for (int i = 0; i < peminjam; i++) {
             for (int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
-                printf(CYAN "| " RESET "%-5d" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-25s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-12s" CYAN " |\n" RESET,
+                printf(CYAN "| " RESET "%3d" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-20s" CYAN " | " RESET "%-15s" CYAN " | " RESET "%-15s" CYAN " |\n" RESET,
                        no,
                        member[dataPinjam[i].memberIndex].dataMember.namaLengkap,
                        member[dataPinjam[i].memberIndex].dataMember.alamatUser.namaJalan,
                        buku[dataPinjam[i].bukuIndex[j]].judulBuku,
-                       dataPinjam[i].tanggalPinjam);
-
+                       dataPinjam[i].tanggalPinjam,
+                       dataPinjam[i].tanggalKembali);
                 no++;
             }
-            printf(CYAN "|---------------------------------------------------------------------------------------------------------|\n" RESET);
+            printf(CYAN "---------------------------------------------------------------------------------------------------------------------------\n" RESET);
         }
 
-        printf(CYAN "|" RESET GREEN "Total Peminjam Aktif:" RESET "%-1d" CYAN "|\n" RESET, peminjam);
+        printf(CYAN "|" RESET GREEN " Total Peminjam Aktif: %-3d" RESET CYAN "|\n" RESET, peminjam);
     } else {
-        printf(RED "Tidak ada peminjaman saat ini\n" RESET);
+        printf(RED "                                              Tidak ada peminjaman saat ini                                              \n" RESET);
     }
 
-    printf(CYAN "===========================================================================================================\n\n" RESET);
+    printf(CYAN "===========================================================================================================================\n\n" RESET);
 }
 
 void kembalikanBuku() {
