@@ -229,42 +229,53 @@ void pinjamkanBuku() {
         int bookNumber = 0;
         char finishPinjamChar;
         bool isFinishPinjam = false;
-        bool isMemberFound = false;
-        bool isCurrentDateReceived = false;
-        bool bookIndexReceived = false;
 
         do {
             bookIndex = findBook();
             if (bookIndex) {
                 bookIndex -= 1;
                 if (buku[bookIndex].jumlah > 0) {
+                    bool isMemberFound = false;
+                    bool alreadyBorrowed = false;
+
+                    // Check if member already has active borrowings
                     for (int i = 0; i < peminjam; i++) {
                         if (dataPinjam[i].memberIndex == memberIndex) {
+                            isMemberFound = true;
+                            
+                            // Check if member already borrowed this book
                             for (int j = 0; j < dataPinjam[i].totalPinjaman; j++) {
                                 if (dataPinjam[i].bukuIndex[j] == bookIndex) {
-                                    printf("Buku sudah dipinjam\n");
-                                    isMemberFound = true;
-                                    bookIndexReceived = true;
-                                    break;
+                                    alreadyBorrowed = true;
+                                    if (strcmp(member[memberIndex].level, "Anggota") == 0) {
+                                        printf("Maaf, Anggota tidak dapat meminjam buku yang sama lebih dari sekali\n");
+                                        break;
+                                    }
                                 }
                             }
-                            if (!bookIndexReceived) {
-                                dataPinjam[i].bukuIndex[dataPinjam[i].totalPinjaman] = bookIndex;
-                                dataPinjam[i].totalPinjaman++;
-                                dataPinjam[i].tanggalPinjam = getCurrentDate();
-                                buku[bookIndex].jumlah--;
-                                bookNumber++;
-                                isMemberFound = true;
-                                printf("\nBuku berhasil ditambahkan ke daftar pinjam\n\n");
-                                break;
+
+                            // If not already borrowed or is a Member (who can borrow duplicates)
+                            if (!alreadyBorrowed || strcmp(member[memberIndex].level, "Member") == 0) {
+                                if (dataPinjam[i].totalPinjaman < 10) {
+                                    dataPinjam[i].bukuIndex[dataPinjam[i].totalPinjaman] = bookIndex;
+                                    dataPinjam[i].totalPinjaman++;
+                                    dataPinjam[i].tanggalPinjam = getCurrentDate();
+                                    buku[bookIndex].jumlah--;
+                                    bookNumber++;
+                                    printf("\nBuku berhasil ditambahkan ke daftar pinjam\n\n");
+                                } else {
+                                    printf("Maaf, batas maksimum peminjaman buku adalah 10\n");
+                                }
                             }
+                            break;
                         }
                     }
 
+                    // If member doesn't have any active borrowings yet
                     if (!isMemberFound) {
                         dataPinjam[peminjam].memberIndex = memberIndex;
-                        dataPinjam[peminjam].bukuIndex[dataPinjam[peminjam].totalPinjaman] = bookIndex;
-                        dataPinjam[peminjam].totalPinjaman++;
+                        dataPinjam[peminjam].bukuIndex[0] = bookIndex;
+                        dataPinjam[peminjam].totalPinjaman = 1;
                         dataPinjam[peminjam].tanggalPinjam = getCurrentDate();
                         buku[bookIndex].jumlah--;
                         bookNumber++;
@@ -420,40 +431,27 @@ void editDataBuku(){
 
 }
 
-void hapusDataBuku(){
+void hapusDataBuku() {
     int bookIndex = findBook();
     char isDelete;
 
+    if (bookIndex > 0) {
         printf(YELLOW "Apakah anda benar - benar ingin menghapus data buku ini ? [y / t]" RESET);
         scanf("%c", &isDelete);
         getchar();
         printf("\n");
-        if(isDelete == 'y'){
 
-            for (int i = 0; i < totalBuku; i++)
-            {
-                if(bookIndex == i - 1){
-                    for(int j = bookIndex - 1; j < totalBuku - 1 ; j++){
-                        buku[i - 1] = buku[j + 1];
-                    }
-                }
+        if (isDelete == 'y') {
+            // Shift all books after the deleted index one position up
+            for (int i = bookIndex - 1; i < totalBuku - 1; i++) {
+                buku[i] = buku[i + 1];
             }
-            totalBuku--;   
-
-
-            printf(YELLOW "Data buku berhasil dihapus " RESET);
-            printf("\n");
-        }else{
-            printf(YELLOW "Data buku batal dihapus " RESET);
-            printf("\n");
+            totalBuku--;
+            printf(YELLOW "Data buku berhasil dihapus\n" RESET);
+        } else {
+            printf(YELLOW "Data buku batal dihapus\n" RESET);
         }
-
-        // if (dataPinjam[i].totalPinjaman == 0) {
-
-        //     for (int k = i; k < peminjam - 1; k++) {
-        //         dataPinjam[k] = dataPinjam[k + 1];
-        //     }
-        //     peminjam--;
-        //     printf("Member sudah tidak memiliki pinjaman buku.\n");
-        // }
+    } else {
+        printf("Buku tidak ditemukan\n");
+    }
 }

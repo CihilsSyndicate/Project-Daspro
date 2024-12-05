@@ -30,6 +30,7 @@ struct Admin{
 
 struct Member{
     char noHp[15];
+    char level[10]; // either "Anggota" or "Member"
     struct User dataMember;
 };
 
@@ -81,31 +82,32 @@ void addMember() {
     char kelurahan[40];
     char kecamatan[40];
     char kota[40];
+    char level[10];
     
     srand(time(NULL));
 
     while (!isFinishAddUser){
         printf(CYAN "=========================================\n" RESET);
-        printf(CYAN "||" RESET GREEN "       FORM INPUT DATA MEMBER        " RESET CYAN "||\n" RESET);
+        printf(CYAN "||" RESET GREEN "       FORM INPUT DATA ANGGOTA        " RESET CYAN "||\n" RESET);
         printf(CYAN "=========================================\n" RESET);
 
-        printf(CYAN "| %-37s |\n", "Masukkan data Member");
+        printf(CYAN "| %-37s |\n", "Masukkan data Anggota");
         printf(CYAN "|---------------------------------------|\n" RESET);
 
-        printf(CYAN "| %-28s: " RESET, "Masukkan nama Member");
+        printf(CYAN "| %-28s: " RESET, "Masukkan nama Anggota");
         fgets(namaLengkap, sizeof(namaLengkap), stdin);
         namaLengkap[strcspn(namaLengkap, "\n")] = '\0';
 
         capitalizeEachWord(namaLengkap);
 
         if (isDuplicateName(namaLengkap)) {
-            printf(RED "Nama member tersebut sudah ada!\n" RESET);
+            printf(RED "Nama Anggota tersebut sudah ada!\n" RESET);
             continue; 
         }
 
         bool validNoHpInput = false;
         while(!validNoHpInput) {
-            printf(CYAN "| %-28s: " RESET, "Masukkan nomor Member (tanpa spasi)");
+            printf(CYAN "| %-28s: " RESET, "Masukkan nomor Anggota (tanpa spasi)");
             fgets(noHp, sizeof(noHp), stdin);
             noHp[strcspn(noHp, "\n")] = '\0';
 
@@ -120,7 +122,7 @@ void addMember() {
         };
 
         printf(CYAN "|---------------------------------------|\n" RESET);
-        printf(CYAN "| %-37s |\n", "Alamat Member");
+        printf(CYAN "| %-37s |\n", "Alamat Anggota");
         printf(CYAN "|---------------------------------------|\n" RESET);
 
         printf(CYAN "| %-28s: " RESET, "Nama Jalan");
@@ -143,6 +145,11 @@ void addMember() {
         kota[strcspn(kota, "\n")] = '\0';
         capitalizeEachWord(kota);
 
+        printf(CYAN "| %-28s: " RESET, "Level (Anggota/Member)");
+        fgets(level, sizeof(level), stdin);
+        level[strcspn(level, "\n")] = '\0';
+        capitalizeEachWord(level);
+
         // Copy input data ke struct Member
         strcpy(member[totalMember].dataMember.namaLengkap, namaLengkap);
         strcpy(member[totalMember].noHp, noHp);
@@ -150,17 +157,18 @@ void addMember() {
         strcpy(member[totalMember].dataMember.alamatUser.kelurahan, kelurahan);
         strcpy(member[totalMember].dataMember.alamatUser.kecamatan, kecamatan);
         strcpy(member[totalMember].dataMember.alamatUser.kota, kota);
+        strcpy(member[totalMember].level, level);
 
         printf(CYAN "---------------------------------------\n\n" RESET);
 
         totalMember++;
 
-        printf("Apakah anda akan menambah data Member lagi? [y / t] : ");
+        printf("Apakah anda akan menambah data Anggota lagi? [y / t] : ");
         scanf("%c", &editLagi);
         getchar();
 
         if (editLagi == 't') {
-            printf(RED "Anda keluar dari menu tambah member!\n" RESET);
+            printf(RED "Anda keluar dari menu tambah Anggota!\n" RESET);
             isFinishAddUser = true;
         } else {
             printf(RED "Input tidak valid. Anda telah keluar dari menu.\n" RESET);
@@ -177,7 +185,7 @@ void getDataMember() {
         printf(CYAN "====================================================================================================================================\n" RESET);
         printf(CYAN "||" RESET YELLOW "                                                          PERPUSTAKAAN HITAM                                                    " RESET CYAN "||\n" RESET);
         printf(CYAN "====================================================================================================================================\n" RESET);
-        printf(CYAN "||" RESET YELLOW "                                                            DAFTAR MEMBER                                                       " RESET CYAN "||\n" RESET);
+        printf(CYAN "||" RESET YELLOW "                                                            DAFTAR ANGGOTA                                                       " RESET CYAN "||\n" RESET);
         printf(CYAN "====================================================================================================================================\n" RESET);
  
         printf(CYAN "| " RESET GREEN "%-5s" RESET CYAN " | " RESET GREEN "%-25s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-20s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " |\n" RESET,
@@ -197,7 +205,7 @@ void getDataMember() {
 
         printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
     } else {
-        printf(RED "Data member kosong!\n" RESET);
+        printf(RED "Data anggota kosong!\n" RESET);
     }
 }
 
@@ -212,7 +220,7 @@ int findMember() {
     getDataMember();
 
     if (totalMember > 0) {
-        printf("Cari data Member berdasarkan Nama: ");
+        printf("Cari data Anggota berdasarkan Nama: ");
         fgets(searchName, sizeof(searchName), stdin);
         searchName[strcspn(searchName, "\n")] = 0; 
 
@@ -254,10 +262,10 @@ int findMember() {
         printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
         
         if (!found) {
-            printf("Member tidak ditemukan, coba periksa kembali!\n");
+            printf("Anggota tidak ditemukan, coba periksa kembali!\n");
         }
     } else {
-        printf("Tidak ada data member.\n");
+        printf("Tidak ada data anggota.\n");
     }
     return 0;
 }
@@ -284,7 +292,7 @@ int editMember() {
         // printf(CYAN "====================================================================================================================================\n" RESET);
         // printf(CYAN "||" RESET YELLOW "                                             HASIL PENCARIAN                                              " RESET CYAN "||\n" RESET);
         // printf(CYAN "====================================================================================================================================\n" RESET);
-        // printf(CYAN "| " RESET GREEN "%-5s" RESET CYAN " | " RESET GREEN "%-25s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-20s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " |\n" RESET,
+        // printf(CYAN "| " RESET GREEN "%-5s" RESET CYAN " | " RESET GREEN "%-25s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-20s" RESET CYAN " | " RESET GREEN "%-15s" RESET CYAN " | " RESET GREEN "%-15s" CYAN " | " RESET GREEN "%-15s" RESET CYAN " |\n" RESET,
         //        "No", "Nama Lengkap", "No HP", "Nama Jalan", "Kelurahan", "Kecamatan", "Kota");
         // printf(CYAN "====================================================================================================================================\n" RESET);
 
@@ -309,7 +317,7 @@ int editMember() {
         printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
 
         if (memberIndex-1 < 0) {
-            printf("Member tidak ditemukan, coba periksa kembali!\n");
+            printf("Anggota tidak ditemukan, coba periksa kembali!\n");
             // return 0;
         } else {
             bool doneEditing = false;
@@ -323,6 +331,7 @@ int editMember() {
                     printf("[4] Kelurahan\n");
                     printf("[5] Kecamatan\n");
                     printf("[6] Kota\n");
+                    printf("[7] Level\n"); // Add this line
                     printf("[0] Selesai\n");
                     printf("Masukkan pilihan: ");
 
@@ -336,6 +345,7 @@ int editMember() {
                     char kota[40];
                     char kelurahan[40];
                     char kecamatan[40];
+                    char level[10];  // Add this line
 
                     bool validInput = false;
                     switch (choice) {
@@ -391,6 +401,17 @@ int editMember() {
                             capitalizeEachWord(kota);
                             strcpy(member[index].dataMember.alamatUser.kota, kota);
                             break;
+                        case 7:  // Add this case
+                            printf("Masukkan Level baru (Anggota/Member): ");
+                            fgets(level, sizeof(level), stdin);
+                            level[strcspn(level, "\n")] = '\0';
+                            capitalizeEachWord(level);
+                            if (strcmp(level, "Anggota") == 0 || strcmp(level, "Member") == 0) {
+                                strcpy(member[index].level, level);
+                            } else {
+                                printf("Level tidak valid. Hanya bisa 'Anggota' atau 'Member'.\n");
+                            }
+                            break;
                         case 0:
                             printf("Pengeditan selesai.\n");
                             doneEditing = true;
@@ -405,7 +426,7 @@ int editMember() {
             // }
         }
     } else {
-        printf("Tidak ada data member.\n");
+        printf("Tidak ada data anggota.\n");
     }
     return 0;
 }
@@ -415,7 +436,7 @@ int deleteMember() {
     getDataMember();
 
     if (totalMember > 0) {
-        printf("Cari data Member berdasarkan Nama: ");
+        printf("Cari data Anggota berdasarkan Nama: ");
         fgets(searchName, sizeof(searchName), stdin);
         searchName[strcspn(searchName, "\n")] = 0; 
 
@@ -455,12 +476,12 @@ int deleteMember() {
        printf(CYAN "------------------------------------------------------------------------------------------------------------------------------------\n\n" RESET);
 
         if (!found) {
-            printf("Member tidak ditemukan, coba periksa kembali!\n");
+            printf("Anggota tidak ditemukan, coba periksa kembali!\n");
             return 0;
         } else {
             char conf;
             if (index != -1) {
-                printf("Apakah anda yakin ingin menghapus member ini? [y / t] : ");
+                printf("Apakah anda yakin ingin menghapus anggota ini? [y / t] : ");
                 scanf("%c", &conf);
                 if (conf == 'y'){
                     int length = sizeof(member) / sizeof(member[0]);
@@ -475,23 +496,23 @@ int deleteMember() {
                     printf("Input tidak valid. Keluar dari menu.");
                 }
             } else {
-                printf("Member tidak ditemukan, coba periksa kembali!\n");
+                printf("Anggota tidak ditemukan, coba periksa kembali!\n");
             }
         }
     } else {
-        printf("Tidak ada data member.\n");
+        printf("Tidak ada data anggota.\n");
     }
     return 0;
 }
 
 void menuMember() {
-    printf(CYAN "||" RESET GREEN "            MENU MEMBER            " RESET CYAN "||\n" RESET);
+    printf(CYAN "||" RESET GREEN "            MENU ANGGOTA            " RESET CYAN "||\n" RESET);
     printf(CYAN "=======================================\n" RESET);
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[1]" RESET, "Tambah Member");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[2]" RESET, "Tampilkan Semua Member");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[3]" RESET, "Cari Member");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[4]" RESET, "Edit Member");
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[5]" RESET, "Hapus Member");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[1]" RESET, "Tambah Anggota");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s" CYAN "|\n", BLUE "[2]" RESET, "Tampilkan Semua Anggota");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[3]" RESET, "Cari Anggota");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[4]" RESET, "Edit Anggota");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", BLUE "[5]" RESET, "Hapus Anggota");
     printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n", RED "[0]" RESET, "Kembali Ke Menu Utama");
     printf(CYAN "---------------------------------------\n\n" RESET);
 }
@@ -510,6 +531,7 @@ void seedUser(){
 void seedMember(){
     strcpy(member[0].dataMember.namaLengkap,"Ricko");
     strcpy(member[0].noHp,"082116375827");
+    strcpy(member[0].level,"Member"); // Add default level
     strcpy(member[0].dataMember.alamatUser.namaJalan,"Jl.Jalan");
     strcpy(member[0].dataMember.alamatUser.kelurahan,"Mugarsari");
     strcpy(member[0].dataMember.alamatUser.kecamatan,"Tamansari");

@@ -26,7 +26,7 @@ void header() {
 void menuUtama() {
     printf(CYAN "||" RESET GREEN "            MENU UTAMA             " RESET CYAN "||\n" RESET);
     printf(CYAN "=======================================\n" RESET);
-    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n" RESET, BLUE "[1]" RESET, "Manajemen Member");
+    printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n" RESET, BLUE "[1]" RESET, "Manajemen Anggota");
     printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n" RESET, BLUE "[2]" RESET, "Manajemen Buku");
     printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n" RESET, BLUE "[3]" RESET, "Manajemen Akun");
     printf(CYAN "| %s " CYAN "|" RESET " %-29s " CYAN "|\n" RESET, RED "[0]" RESET, "Keluar");
